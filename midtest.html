@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 일상에 들어온 처방약, 괜찮은 걸까? · 중간평가</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --ink:#3e3f44;
+  --ink-2:#6b6d74;
+  --mut:#a1a1a1;
+  --line:#e5e5e5;
+  --soft:#f4f5f6;
+  --dark:#141414;
+  --red:#f03a3a;
+  --serif:'Pretendard',-apple-system,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --bg:#fff;
+  --fg:var(--ink);
+  --fg-2:var(--ink-2);
+  --ln:var(--line);
+  --circ:#ececec;
+}
+body.th-soft{--bg:#f4f5f6;--circ:#e4e5e7}
+body.th-dark{--bg:#141414;--fg:#fff;--fg-2:#a9aab0;--ln:#34353a;--circ:#2a2a2c}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden;font-family:'Pretendard',-apple-system,sans-serif;color:var(--ink);word-break:keep-all}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center;background:var(--bg);color:var(--fg);overflow:hidden;transition:background .8s var(--ease),color .8s var(--ease)}
+
+.slide{position:absolute;inset:0;padding:140px 120px 110px;opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility .7s;z-index:1}
+.slide.active{opacity:1;visibility:visible}
+
+/* 헤더 · 푸터 */
+#hd{position:absolute;top:0;left:0;right:0;height:112px;padding:0 120px;display:flex;align-items:center;justify-content:flex-end;z-index:8}
+#hd .rt{display:flex;align-items:center;gap:40px}
+#hd .talk{font-size:17px;font-weight:700;padding-bottom:4px;border-bottom:1.5px solid currentColor}
+#burger{width:34px;height:20px;position:relative}
+#burger::before,#burger::after{content:'';position:absolute;right:0;height:1.5px;background:currentColor;transition:transform .4s var(--ease)}
+#burger::before{top:5px;width:34px}
+#burger::after{top:13px;width:22px}
+#burger:hover::after{width:34px}
+#ft{position:absolute;left:120px;bottom:44px;font-size:16px;color:var(--fg-2);z-index:8;transition:color .8s}
+#dots{position:absolute;left:50%;bottom:50px;transform:translateX(-50%);display:flex;gap:10px;align-items:center;z-index:8}
+#dots i{display:block;width:8px;height:8px;border-radius:50%;background:var(--fg-2);opacity:.35;transition:width .5s var(--ease),opacity .4s,border-radius .5s}
+#dots i.on{width:36px;border-radius:6px;opacity:1}
+#pg{position:absolute;right:120px;bottom:42px;font-family:var(--serif);font-size:18px;z-index:8;color:var(--fg-2);font-weight:700}
+
+/* 메뉴 오버레이 */
+#menu{position:absolute;inset:0;background:var(--dark);color:#fff;z-index:20;padding:150px 120px 100px;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s}
+#menu.open{opacity:1;visibility:visible}
+#menu ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:100px}
+#menu li button{width:100%;display:grid;grid-template-columns:70px 1fr;align-items:baseline;text-align:left;padding:22px 0;border-bottom:1px solid #34353a;font-size:30px;font-weight:300;opacity:.7;transition:opacity .3s,padding .4s var(--ease)}
+#menu li button:hover{opacity:1;padding-left:14px}
+#menu li button i{font-family:var(--serif);font-style:normal;font-size:22px;font-weight:700;color:var(--mut)}
+#menu .x{position:absolute;top:36px;right:120px;font-size:17px;font-weight:700;border-bottom:1.5px solid #fff;padding-bottom:4px;color:#fff}
+#hd.hide{opacity:0;pointer-events:none}
+
+/* 등장 */
+.slide .rv{opacity:0;transform:translateY(32px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.slide.active .rv{opacity:1;transform:none}
+.slide.active .rv:nth-child(1){transition-delay:.10s}
+.slide.active .rv:nth-child(2){transition-delay:.20s}
+.slide.active .rv:nth-child(3){transition-delay:.30s}
+.slide.active .rv:nth-child(4){transition-delay:.40s}
+.slide.active .rv:nth-child(5){transition-delay:.50s}
+.slide.active .rv:nth-child(6){transition-delay:.60s}
+@media (prefers-reduced-motion:reduce){.slide,.slide .rv,#dots i{transition:none!important;animation:none!important}}
+
+/* 공통 타이포 */
+.eb{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.eb .en{font-size:26px;font-weight:700;line-height:1;letter-spacing:-.01em}
+.eb .tg{font-size:16px;font-weight:500;letter-spacing:.04em;color:var(--fg-2)}
+.eb .tg::before{content:'/';margin-right:14px;opacity:.5}
+h2.t{font-size:50px;line-height:1.32;font-weight:300;letter-spacing:-.035em;max-width:1560px}
+h2.t b{font-weight:700}
+.src{font-size:16px;line-height:1.55;color:var(--mut)}
+.abs-src{position:absolute;left:120px;right:260px;bottom:96px}
+.rows{border-top:1px solid var(--fg)}
+.num{font-family:var(--serif);font-weight:700;line-height:1;letter-spacing:-.03em}
+.chip{display:inline-block;font-size:15px;font-weight:700;letter-spacing:.04em;padding:4px 14px;border-radius:999px;border:1px solid currentColor}
+.chip.fill{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip.red{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* 1 표지 */
+.cover{display:flex;flex-direction:column;justify-content:center;padding-top:110px}
+.cover .lab{font-size:22px;font-weight:600;color:var(--ink-2);margin-bottom:34px}
+.cover h1{font-size:112px;line-height:1.18;font-weight:300;letter-spacing:-.05em}
+.cover h1 b{font-weight:800}
+.cover .lead{margin-top:40px;font-size:30px;line-height:1.55;color:var(--ink-2);max-width:1100px;font-weight:300}
+.cover .meta{position:absolute;left:120px;right:260px;bottom:120px;display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:70px;border-top:1px solid var(--line);padding-top:26px}
+.cover .meta dt{font-family:var(--serif);font-size:22px;color:var(--mut);margin-bottom:6px}
+.cover .meta dd{font-size:23px;font-weight:600}
+
+/* 2 Overview */
+.ov-rows{margin-top:44px}
+.ov-r{display:grid;grid-template-columns:260px 1fr;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.ov-r dt{font-size:20px;font-weight:700;color:var(--ink-2)}
+.ov-r dd{font-size:30px;line-height:1.5;font-weight:400;letter-spacing:-.02em}
+.q-lab{margin-top:44px;font-family:var(--serif);font-size:30px;color:var(--ink-2)}
+.qs3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16px;border-top:1px solid var(--ink)}
+.qs3>div{padding:30px 40px 30px 0;border-right:1px solid var(--line);margin-right:40px}
+.qs3>div:last-child{border:0;margin:0}
+.qs3 .num{font-size:64px;color:var(--ink)}
+.qs3 p{font-size:30px;line-height:1.45;margin-top:16px;font-weight:500;letter-spacing:-.02em}
+
+
+/* 2 Overview: 세 항목 동일 위계 */
+.ov3{margin-top:34px;border-top:1px solid var(--ink)}
+.ov3 .r{display:grid;grid-template-columns:300px 1fr;gap:20px;padding:44px 0;border-bottom:1px solid var(--line);align-items:start}
+.ov3 dt{font-size:32px;line-height:1.5;font-weight:700;letter-spacing:-.025em}
+.ov3 dd{font-size:32px;line-height:1.5;font-weight:400;letter-spacing:-.025em}
+.ov3 .qs3{margin-top:0;border-top:0;grid-template-columns:repeat(3,1fr)}
+.ov3 .qs3>div{padding:0 36px 0 0;margin-right:36px}
+.ov3 .qs3 .num{display:block}
+
+/* 3 Framework */
+.grp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:46px}
+.grp>div{font-size:18px;font-weight:700;color:var(--ink-2);padding-bottom:12px;border-bottom:1px solid var(--ink);display:flex;justify-content:space-between}
+.grp>div:first-child{margin-right:24px}
+.grp>div:last-child{margin-left:24px}
+.dd4{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.dd4>div{padding:36px 30px 30px 0;border-right:1px solid var(--line);margin-right:30px;min-height:470px}
+.dd4>div:last-child{border:0;margin:0}
+.dd4 .en{font-family:var(--serif);font-size:48px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.dd4 .md{font-size:19px;font-weight:700;color:var(--red);margin:10px 0 30px}
+.dd4 ul{list-style:none}
+.dd4 li{font-size:26px;line-height:1.4;padding:14px 0;border-top:1px solid var(--line);font-weight:500;letter-spacing:-.02em}
+.dd4 li:first-child{border-top:0;padding-top:0}
+.dd4 p.last{font-size:26px;line-height:1.6;font-weight:500;letter-spacing:-.02em}
+.dd4 p.last b{font-weight:800}
+
+
+/* 3 Double Diamond */
+.dd2{display:grid;grid-template-columns:1020px 1fr;gap:56px;margin-top:30px;align-items:stretch}
+.ddimg{margin:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);background:#fff}
+.ddimg img{display:block;width:100%;height:auto}
+.ddlist{border-top:1px solid var(--ink);display:flex;flex-direction:column}
+.ddlist>div{flex:1;display:flex;flex-direction:column;justify-content:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.ddlist .n{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.2}
+.ddlist .n i{font-style:normal;font-size:16px;font-weight:700;color:var(--red);margin-left:10px;letter-spacing:0}
+.ddlist .d{font-size:21px;line-height:1.5;margin-top:8px;font-weight:500;letter-spacing:-.02em}
+.ddlist .d b{font-weight:800}
+
+/* 4 Background */
+.bg3{display:grid;grid-template-columns:1fr 1fr 1.7fr;gap:0;margin-top:30px;border-top:1px solid var(--ink)}
+.bg3>div{padding:22px 36px 14px 0;border-right:1px solid var(--line);margin-right:36px}
+.bg3>div:last-child{border:0;margin:0}
+.bg3 .num{font-size:44px;color:var(--red)}
+.bg3 h3{font-size:22px;font-weight:700;color:var(--ink-2);margin:12px 0 8px}
+.bg3 .h{font-size:29px;line-height:1.4;font-weight:600;letter-spacing:-.025em}
+.bg3 .d{font-size:21px;line-height:1.55;color:var(--ink-2);margin-top:14px}
+.bg3 .d b{color:var(--ink);font-weight:700;font-family:var(--serif);font-size:30px}
+.bg3 .d.d2{margin-top:6px;color:var(--mut)}
+.bg3 ul{list-style:none;margin-top:10px;display:grid;gap:0}
+.bg3 li{display:grid;grid-template-columns:74px 1fr;font-size:19px;line-height:1.45;color:var(--ink);padding:8px 0;border-top:1px solid var(--line)}
+.bg3 li i{font-style:normal;font-weight:800}
+.ban{margin-top:10px;background:var(--ink);color:#fff;border-radius:0;padding:18px 34px;font-size:30px;font-weight:600;letter-spacing:-.025em;display:flex;align-items:center;gap:20px}
+.ban em{font-family:var(--serif);font-size:22px;color:#c9c9cc;font-weight:400}
+.lim{margin-top:14px;font-size:20px;color:var(--ink-2);display:flex;gap:14px;align-items:baseline}
+
+/* 5 Survey (dark) */
+.pop{margin-top:26px;font-size:18px;line-height:1.4;color:var(--fg-2);display:flex;gap:12px;align-items:center}
+.pop .chip{color:var(--fg-2);font-size:14px}
+.pop .src{display:inline-flex;align-items:center;gap:12px;font-size:18px;line-height:1.4;color:var(--fg-2)}
+.q3{display:grid;grid-template-columns:repeat(3,1fr);margin-top:26px;border-top:1px solid #fff}
+.q3>div{padding:26px 34px 10px 0;border-right:1px solid var(--ln);margin-right:34px}
+.q3>div:last-child{border:0;margin:0}
+.q3 h3{font-size:22px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.gl{font-size:18px;line-height:1.4;color:var(--fg-2);margin:0 0 12px}
+.q3 .gl{margin-top:28px}
+.big{display:flex;align-items:baseline;gap:16px;margin-bottom:16px;white-space:nowrap}
+.big .n{font-family:var(--serif);font-size:56px;font-weight:700;line-height:1;letter-spacing:-.03em;color:#6fc3b5}
+.big .n small{font-size:30px}
+.big p{font-size:20px;line-height:1.4;color:#d0d0d4}
+.sb{display:flex;height:34px;gap:2px;margin-bottom:12px}
+.sb i{font-style:normal;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff;overflow:hidden}
+.c0{background:#4a4b51}.c1{background:#6fc3b5;color:#10201d}.c2{background:#3f8f86}
+.lg{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:17px;line-height:1.4;color:#d0d0d4;margin-bottom:0;white-space:nowrap}
+.lg b{display:inline-block;width:10px;height:10px;margin-right:6px}
+.hb{margin-bottom:16px}
+.hb .k{display:flex;justify-content:space-between;font-size:18px;line-height:1.4;color:#d0d0d4;margin-bottom:6px;white-space:nowrap}
+.hb .k b{font-weight:700}
+.hb .tr{display:block;height:14px;background:#2a2a2c}
+.hb .tr i{display:block;height:100%;background:#6b6d74}
+.hb.on .k{color:#fff}.hb.on .k b{color:#6fc3b5}.hb.on .tr i{background:#6fc3b5}
+.q3 .st.top .n{color:#6fc3b5}
+.st{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:8px 0;border-top:1px solid var(--ln)}
+.st .n{font-family:var(--serif);font-size:48px;font-weight:700;line-height:1;letter-spacing:-.03em;min-width:190px}
+.st .n small{font-size:30px}
+.st p{font-size:20px;line-height:1.45;color:#d0d0d4}
+.st.top .n{color:var(--red)}
+.q3>div{display:flex;flex-direction:column;min-height:610px}
+.ib{margin-top:auto;padding:16px 22px 18px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.04)}
+.ib span{display:block;font-size:16px;font-weight:700;letter-spacing:.04em;color:#6fc3b5;margin-bottom:6px}
+.ib p{font-size:22px;line-height:1.45;font-weight:500;letter-spacing:-.02em}
+
+/* 6 Interview */
+.who{display:grid;gap:10px;margin-top:22px}
+.who .m{display:flex;align-items:center;gap:16px;font-size:20px;line-height:1.4}
+.who .m .chip{min-width:96px;text-align:center;color:var(--ink-2);font-size:14px}
+.who .v{display:flex;gap:28px;flex-wrap:wrap;color:var(--ink)}
+.who .v b{font-family:var(--serif);font-weight:800;margin-right:8px}
+.iv{margin-top:22px;border-top:1px solid var(--ink)}
+.iv .hd,.iv .r{display:grid;grid-template-columns:540px 1fr 440px;gap:30px}
+.iv .hd{padding:10px 0;font-size:16px;font-weight:600;color:var(--mut);border-bottom:1px solid var(--line)}
+.iv .r{padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+.iv .h{display:flex;gap:16px;align-items:flex-start}
+.iv .h .num{font-size:40px;line-height:1;color:var(--red)}
+.iv .h .chip{font-size:14px;margin-bottom:8px}
+.iv .h b{display:block;font-size:24px;line-height:1.35;font-weight:700;letter-spacing:-.025em;white-space:nowrap}
+.iv .qq,.iv .ct{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.iv .qq p,.iv .ct p{font-size:20px;line-height:1.5;color:var(--ink)}
+.iv .ct p{color:var(--ink-2)}
+.iv .qq p i,.iv .ct p i{font-style:normal;font-weight:800;margin-right:6px}
+.iv .ct p i{margin-right:0}
+.iv .qq p i+i{margin-left:-2px}
+.iv .ct p.no{color:var(--mut)}
+.lim{display:flex;gap:14px;align-items:center;margin-top:18px;font-size:20px;line-height:1.5}
+.lim .chip{font-size:14px;color:var(--ink-2)}
+.lim p{color:var(--ink-2)}
+
+/* 7 Behavioral Archetype */
+.ar{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px}
+.ar .c{background:#fff;border:1px solid var(--line);padding:34px 36px 30px;display:flex;flex-direction:column;min-height:490px}
+.ar .num{font-size:44px;line-height:1;color:var(--red)}
+.ar h3{font-size:32px;line-height:1.3;font-weight:800;letter-spacing:-.03em;margin:18px 0 26px}
+.ar .w{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.ar .w .chip{font-size:14px;color:var(--ink-2)}
+.ar .w p{font-size:24px;line-height:1.5;letter-spacing:-.02em}
+.ar .rp{margin-top:auto;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px;font-size:18px;color:var(--ink-2)}
+.ar .rp em{font-style:normal;display:inline-flex;width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:17px}
+.lim.sm{font-size:17px;margin-top:26px}
+
+/* 8 Insight (dark) */
+.hmw{position:absolute;left:120px;right:120px;bottom:128px;display:flex;justify-content:center;z-index:6}
+.hmw-ov{position:absolute;inset:0;padding:250px 160px 150px;display:flex;align-items:center;justify-content:center;background:rgba(20,20,20,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);z-index:5;opacity:0;clip-path:circle(0% at 50% 85%);visibility:hidden;transition:clip-path 1.3s var(--ease),opacity 1s ease,visibility 1.3s}
+.hmw-ov p{max-width:1480px;text-align:center;font-size:68px;line-height:1.45;font-weight:700;letter-spacing:-.035em;text-wrap:balance;color:#fff;opacity:0;transform:translateY(60px) scale(.8);transition:opacity .8s var(--ease) .3s,transform 1.1s var(--ease) .25s}
+.slide.hmw-open .hmw-ov{clip-path:circle(150% at 50% 85%);opacity:1;visibility:visible}
+.slide.hmw-open .hmw-ov p{opacity:1;transform:none}
+.hmw-btn{display:inline-flex;align-items:center;gap:16px;min-height:68px;padding:10px 48px;border:2px solid #fff;border-radius:999px;font-size:28px;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--dark);transition:background .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
+.hmw-btn i{position:relative;width:20px;height:20px}
+.hmw-btn i::before,.hmw-btn i::after{content:'';position:absolute;left:0;right:0;top:9px;height:3px;background:currentColor;transition:transform .4s var(--ease)}
+.hmw-btn i::after{transform:rotate(90deg)}
+.slide.hmw-open .hmw-btn i::after{transform:none}
+.hmw-btn:hover,.slide.hmw-open .hmw-btn{background:#fff;color:var(--dark)}
+.hmw-btn:hover{transform:scale(1.04)}
+.hmw-btn:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+@media (prefers-reduced-motion:reduce){.hmw-ov,.hmw-ov p{transition:none!important}}
+.ins-big{margin-top:56px;display:flex;flex-direction:column;gap:48px}
+.ins-big .s{width:960px;display:grid;grid-template-columns:84px 1fr;align-items:start;padding-top:26px;border-top:1px solid var(--ln);cursor:default;outline:0;transition:opacity .4s var(--ease),border-color .4s var(--ease)}
+.ins-big .s:nth-child(2){margin-left:360px}
+.ins-big .s:nth-child(3){margin-left:720px}
+.ins-big .num{font-size:60px;line-height:1;color:var(--red);transition:transform .4s var(--ease)}
+.ins-big p{font-size:40px;line-height:1.45;text-wrap:balance;font-weight:400;letter-spacing:-.03em;color:var(--fg-2);transition:color .4s var(--ease),font-weight .4s,transform .4s var(--ease)}
+.ins-big:hover .s:not(:hover),.ins-big:focus-within .s:not(:focus){opacity:.4}
+.ins-big .s:hover,.ins-big .s:focus{border-color:#fff}
+.ins-big .s:hover p,.ins-big .s:focus p{color:#fff;font-weight:700;transform:translateX(8px)}
+.ins-big .s:hover .num,.ins-big .s:focus .num{transform:scale(1.12);transform-origin:left top}
+.ins-big .s:focus-visible{border-color:var(--red)}
+.cond{margin-top:8px;padding:18px 0;border-top:1px solid var(--ln);font-size:23px;color:var(--fg-2);display:flex;gap:18px;align-items:center}
+.cond b{color:#fff;font-weight:600}
+.tb{width:100%;border-collapse:collapse;margin-top:6px;font-size:22px}
+.tb th{text-align:left;font-size:15px;letter-spacing:.1em;color:var(--mut);font-weight:700;padding:12px 16px 12px 0;border-bottom:1px solid #fff}
+.tb td{padding:18px 16px 18px 0;border-bottom:1px solid var(--ln);vertical-align:middle;line-height:1.45}
+.tb td:first-child{font-weight:700;font-size:24px;white-space:nowrap}
+.tb td .n{font-family:var(--serif);font-size:30px;font-weight:700}
+.tb td .n small{font-size:20px;color:var(--fg-2);margin-left:6px}
+.tb td .rep{display:inline-flex;width:40px;height:40px;border-radius:50%;background:var(--red);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:19px}
+
+/* 8 Painpoint */
+.pp{margin-top:34px;border-top:1px solid var(--ink)}
+.pp .hdr,.pp .r{display:grid;grid-template-columns:170px 600px 1fr;gap:20px}
+.pp .hdr{font-size:15px;letter-spacing:.1em;font-weight:700;color:var(--mut);padding:14px 0;border-bottom:1px solid var(--line)}
+.pp .r{padding:42px 0;border-bottom:1px solid var(--line);align-items:center}
+.pp .r .s{position:relative;font-size:28px;font-weight:800;letter-spacing:-.03em}
+.pp .r .s i{position:absolute;left:0;bottom:100%;line-height:1;font-family:var(--serif);font-style:normal;font-weight:700;font-size:18px;color:var(--red);margin-bottom:6px}
+.pp .r .p{font-size:24px;font-weight:400;color:var(--ink-2);line-height:1.45;letter-spacing:-.02em}
+.pp .r .p b{font-family:var(--serif);font-size:26px;color:var(--red);font-weight:700;margin-left:8px}
+.pp .r .g{font-size:24px;font-weight:700;line-height:1.45;display:flex;gap:18px;align-items:center;justify-content:space-between;letter-spacing:-.02em}
+.pp .r .g span{white-space:nowrap}
+.pp .r .g .a{flex:none;display:inline-flex;gap:6px}
+.pp .r .g .a em{font-style:normal;display:inline-flex;width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:17px}
+.opp{margin-top:30px;background:var(--ink);color:#fff;padding:26px 36px;font-size:30px;font-weight:600;letter-spacing:-.03em;display:flex;gap:26px;align-items:center}
+.opp em{font-family:var(--serif);font-size:26px;font-weight:400;color:#c9c9cc;flex:none}
+
+/* 9 가설 */
+.hy{margin-top:34px;display:grid;grid-template-columns:1fr;border-top:1px solid var(--ink);padding-top:26px;align-items:start}
+.hy .l{font-family:var(--serif);font-size:34px;color:var(--ink-2)}
+.hy p{font-size:36px;line-height:1.5;font-weight:500;letter-spacing:-.03em}
+.hy p b{font-weight:800;background:linear-gradient(transparent 62%,rgba(240,58,58,.18) 62%)}
+.cc3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px;margin-top:28px;margin-right:60px;grid-template-rows:repeat(4,auto)}
+.cc{background:#fff;border:1px solid var(--line);padding:22px 30px;display:grid;grid-template-rows:subgrid;grid-row:span 4}
+.cc .top{display:flex;align-items:baseline;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--ink)}
+.cc .top .num{font-size:50px;color:var(--red)}
+.cc .top b{font-size:27px;font-weight:700;line-height:1.3;letter-spacing:-.03em}
+.cc .w{padding:13px 0;border-bottom:1px solid var(--line)}
+.cc .w:last-child{border:0;padding-bottom:0}
+.cc .w .chip{margin-bottom:10px;font-size:14px}
+.cc .w p{font-size:22px;line-height:1.45;letter-spacing:-.02em}
+
+/* 10 컨셉 (dark) */
+.cd3{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(5,auto);gap:0;margin-top:34px;border-top:1px solid #fff}
+.cd3>div{padding:28px 34px 10px 0;border-right:1px solid var(--ln);margin-right:34px;display:grid;grid-template-rows:subgrid;grid-row:span 5}
+.cd3>div:last-child{border:0;margin:0}
+.cd3 .top{display:flex;align-items:baseline;gap:16px}
+.cd3 .num{font-size:54px;color:var(--red)}
+.cd3 .lb{font-size:14px;letter-spacing:.14em;color:var(--mut);font-weight:700}
+.cd3 h3{font-size:30px;line-height:1.4;font-weight:700;margin:12px 0 22px;letter-spacing:-.03em}
+.cd3 ul{display:contents}
+.cd3 li{list-style:none;display:grid;grid-template-columns:88px 1fr;align-items:baseline;padding:15px 0;border-top:1px solid var(--ln);font-size:22px;line-height:1.5;color:#e4e4e6}
+.cd3 li .chip{justify-self:start;font-size:14px;padding:3px 12px;vertical-align:2px}
+.cd3 li .chip.must{background:var(--red);color:#fff;border-color:var(--red)}
+.cd3 li .chip.should{background:rgba(240,58,58,.16);color:#ff8d8d;border-color:rgba(240,58,58,.55)}
+.cd3 li .chip.nice{background:transparent;color:var(--mut);border-color:#5a5b61}
+.cd3 li:has(.must)>span:last-child{font-weight:700;color:#fff}
+.cd3+.lg{display:block;margin-top:22px;white-space:normal;font-size:16px;color:var(--mut);letter-spacing:-.01em}
+.fin{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:30px;border-top:1px solid #fff}
+.fin>div{padding:24px 34px 0 0;display:grid;grid-template-columns:90px 1fr;gap:10px;font-size:24px;line-height:1.55}
+.fin>div+div{border-left:1px solid var(--ln);padding-left:34px}
+.fin .k{font-family:var(--serif);font-size:30px;color:var(--mut)}
+
+/* 인쇄 / PDF: 슬라이드 한 장 = 한 페이지 */
+@page{size:1920px 1080px;margin:0}
+@media print{
+  html,body{height:auto;overflow:visible;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #viewport{position:static;display:block}
+  #stage{transform:none!important;width:1920px;height:auto;overflow:visible;background:none}
+  #hd,#ft,#dots,#pg,#menu{display:none!important}
+  .slide{position:relative;inset:auto;width:1920px;height:1080px;opacity:1;visibility:visible;break-after:page;page-break-after:always;overflow:hidden}
+  .slide:last-of-type{break-after:auto;page-break-after:auto}
+  .slide .rv{opacity:1!important;transform:none!important;transition:none!important}
+  .slide[data-theme="light"]{background:#fff}
+  .slide[data-theme="soft"]{background:#f4f5f6}
+  .slide[data-theme="dark"]{background:#141414;color:#fff;--fg:#fff;--fg-2:#a9aab0;--ln:#34353a}
+  .bar-fill{width:var(--w)!important}
+}
+</style>
+</head>
+<body class="th-light">
+<div id="viewport">
+<div id="stage">
+
+  <header id="hd">
+    <div class="rt"><button id="burger" aria-label="목차 열기"></button></div>
+  </header>
+
+  <!-- 1 표지 -->
+  <section class="slide cover active" data-theme="light">
+    <p class="lab rv">차세대경험디자인(이주호교수님) 중간평가</p>
+    <h1 class="rv">나의 일상에 들어온 처방약,<br><b>괜찮은 걸까?</b></h1>
+    <p class="lead rv">처방 직후, 평소 먹던 영양제와 함께 먹어도 되는지 확신하지 못하는 경험</p>
+    <dl class="meta rv">
+      <div><dt>School</dt><dd>이화여자대학교 GSD UX디자인</dd></div>
+      <div><dt>Student</dt><dd>262MAD22 전새이</dd></div>
+      <div><dt>Date</dt><dd>2026.10.15~10.22</dd></div>
+      <div><dt>Tool</dt><dd>Claude, Claude Code, Google Form</dd></div>
+    </dl>
+  </section>
+
+  <!-- 2 Overview -->
+  <section class="slide" data-theme="light">
+    <div class="eb rv"><span class="en">Overview</span><span class="tg">Discover</span></div>
+    <dl class="ov3 rv">
+      <div class="r"><dt>문제점 발견</dt><dd>처방약을 받은 직후 평소 먹던 영양제를 함께 먹어도 되는지 모르겠다.</dd></div>
+      <div class="r"><dt>문제의식</dt><dd>처방약을 받은 뒤에도 기존에 복용하던 영양제와의 상호작용을 사용자가 스스로 확인해야 하는 것은 아닐까?</dd></div>
+      <div class="r"><dt>탐구 질문</dt>
+        <dd><div class="qs3">
+          <div><span class="num">1</span><p>사람들은 처방약을 받고 나와 같은 궁금증이 들까?</p></div>
+          <div><span class="num">2</span><p>든다면 어떻게 해결할까?</p></div>
+          <div><span class="num">3</span><p>해결하지 못하는 것들은 무엇일까?</p></div>
+        </div></dd></div>
+    </dl>
+  </section>
+
+  <!-- 3 Framework -->
+  <section class="slide" data-theme="light">
+    <div class="eb rv"><span class="en">Framework</span></div>
+    <h2 class="t rv"><b>Double Diamond</b></h2>
+    <div class="dd2 rv">
+      <figure class="ddimg"><img src="double-diamond.png" alt="Double Diamond 프레임워크: Discover, Define, Develop, Deliver"></figure>
+      <div class="ddlist">
+        <div><p class="n">Discover <i>발산</i></p><p class="d">문제점 발견 · 데스크리서치 · 설문 · 인터뷰</p></div>
+        <div><p class="n">Define <i>수렴</i></p><p class="d">최종 리서치 인사이트 · 페인포인트 · 가설 세우기</p></div>
+        <div><p class="n">Develop <i>발산</i></p><p class="d"><b>컨셉 3가지</b>와 아이디어 검증 후</p></div>
+        <div><p class="n">Deliver <i>수렴</i></p><p class="d">컨셉을 검증하고 발전시켜 기말에서 완성도 높게 디자인한다.</p></div>
+      </div>
+    </div>
+    <p class="src abs-src rv">출처: Design Council, The Double Diamond</p>
+  </section>
+
+  <!-- 4 Background -->
+  <section class="slide" data-theme="light">
+    <div class="eb rv"><span class="en">Background</span><span class="tg">Discover</span></div>
+    <h2 class="t rv"><b>데스크리서치</b></h2>
+    <div class="bg3 rv">
+      <div><span class="num">①</span><h3>진료</h3><p class="h">진료 시간이 짧다</p><p class="d">한국 종합병원 평균 진료 시간은<br><b>6.2~7.4분</b>이다.</p><p class="d d2">미국 약 21분, 영국 약 9분</p></div>
+      <div><span class="num">②</span><h3>환자</h3><p class="h">스스로 정보를 찾는다</p><p class="d">20~50대 인터넷 이용자의 약<br><b>78%</b>가 건강 의료정보를 검색한다</p></div>
+      <div><span class="num">③</span><h3>약·영양제·음식</h3><p class="h">처방약과 영양제, 음식은 상호작용할 수 있다</p>
+        <ul>
+          <li><i>영양제</i><span>건강기능식품은 처방약·일반의약품과 상호작용해 약의 효과를 줄이거나 부작용을 늘릴 수 있다.</span></li>
+          <li><i>음식</i><span>약의 효과는 함께 먹고 마시는 식음료에 따라서도 달라질 수 있다.</span></li>
+          <li><i>예</i><span>당뇨약 + 뽕잎·누에가루는 저혈당 위험이 있을 수 있다. 인삼 혼합제품은 혈당·혈압이 오를 수 있어 혈압약 복용자는 주의가 필요하다.</span></li>
+          <li><i>식약처</i><span>약을 먹는 중이라면 건강기능식품을 먹기 전에 의사와 상담하라고 권고한다.</span></li>
+        </ul></div>
+    </div>
+    <div class="ban rv"><em>Insight</em>처방 이후에 이어지는 일상과 처방약에 대한 의문은 환자 스스로 해결해야 한다.</div>
+    <p class="src abs-src rv">출처: PMC12398989 · 2025 인터넷이용실태조사 · 한국의약통신 「약과 영양제 병용, 안전할까?」(식약처·MSD 매뉴얼 인용) · MSD 매뉴얼 「약물 상호작용」</p>
+  </section>
+
+  <!-- 5 Survey -->
+  <section class="slide" data-theme="dark">
+    <div class="eb rv"><span class="en">Survey</span><span class="tg">Discover</span></div>
+    <h2 class="t rv"><b>상호작용 설명은 부족했고, 해결은 검색에 기댔다</b></h2>
+    <p class="pop rv"><span class="chip">응답자</span>52명 (만 18~65세)<span class="src" style="margin-left:auto"><span class="chip">Tool</span> Google Form</span></p>
+    <div class="q3 rv">
+      <div><h3>질문 1. 같은 궁금증이 들까?</h3>
+        <div class="big"><span class="n">82.7<small>%</small></span><p>설명이 부족했다 (부족 + 전혀)</p></div>
+        <div class="sb"><i class="c0" style="width:17.3%">17.3</i><i class="c2" style="width:40.4%">40.4</i><i class="c1" style="width:42.3%">42.3</i></div>
+        <ul class="lg"><li><b class="c0"></b>충분히</li><li><b class="c2"></b>부족</li><li><b class="c1"></b>전혀</li></ul>
+        <p class="gl">가장 알고 싶은 영역</p>
+        <div class="big"><span class="n">61.5<small>%</small></span><p>상호작용이 1위</p></div>
+        <div class="ib"><span>Insight 1</span><p>약과 함께 챙길 것에 대한 설명이 가장 비어 있다.</p></div></div>
+      <div><h3>질문 2. 든다면 어떻게 해결할까?</h3>
+        <div class="big"><span class="n">71.2<small>%</small></span><p>인터넷 검색으로 해결한다</p></div>
+        <div class="hb on"><span class="k">인터넷 검색<b>71.2%</b></span><span class="tr"><i style="width:71.2%"></i></span></div>
+        <div class="hb"><span class="k">약사 문의<b>9.6%</b></span><span class="tr"><i style="width:9.6%"></i></span></div>
+        <div class="hb"><span class="k">커뮤니티·SNS<b>9.6%</b></span><span class="tr"><i style="width:9.6%"></i></span></div>
+        <div class="hb"><span class="k">병원 콜센터·간호사<b>3.8%</b></span><span class="tr"><i style="width:3.8%"></i></span></div>
+        <div class="hb"><span class="k">기타<b>5.8%</b></span><span class="tr"><i style="width:5.8%"></i></span></div>
+        <div class="ib"><span>Insight 2</span><p>직접 질문보다 검색으로 해결한다.</p></div></div>
+      <div><h3>질문 3. 해결하지 못하는 것들은 무엇일까?</h3>
+        <div class="big"><span class="n">57.7<small>%</small></span><p>몇 번 이상 해결 못 했다</p></div>
+        <div class="sb"><i class="c0" style="width:3.8%"></i><i class="c0" style="width:38.5%">38.5</i><i class="c2" style="width:26.9%">26.9</i><i class="c2" style="width:13.5%">13.5</i><i class="c1" style="width:17.3%">17.3</i></div>
+        <ul class="lg"><li><b class="c0"></b>해결</li><li><b class="c2"></b>몇 번</li><li><b class="c2"></b>여러 번</li><li><b class="c1"></b>방치</li></ul>
+        <p class="gl">해결하지 못한 이유</p>
+        <div class="hb on"><span class="k">정보가 달라 신뢰하기 어려움<b>46.2%</b></span><span class="tr"><i style="width:46.2%"></i></span></div>
+        <div class="hb on"><span class="k">진료 시간 부족<b>42.3%</b></span><span class="tr"><i style="width:42.3%"></i></span></div>
+        <div class="hb on"><span class="k">분위기상 묻지 못함<b>28.8%</b></span><span class="tr"><i style="width:28.8%"></i></span></div>
+        <div class="ib"><span>Insight 3</span><p>진료실에서는 질문이 막히고, 검색에서는 신뢰가 어렵다.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 6 Interview -->
+  <section class="slide" data-theme="light">
+    <div class="eb rv"><span class="en">Interview</span><span class="tg">Discover</span></div>
+    <h2 class="t rv" style="font-size:46px"><b>설문에서 발견한 인사이트를 확인하고, 새로운 발견으로 이어지다</b></h2>
+    <div class="who rv">
+      <div class="m"><span class="chip">대상</span><span class="v"><span><b>A</b>30대 후반 직장인</span><span><b>B</b>30대 중반 강사</span><span><b>C</b>53세 주부</span><span><b>D</b>30세 임산부</span></span></div>
+      <div class="m"><span class="chip">모집 기준</span><span class="v"><span>최근 2년 내 병·의원 방문과 처방약 경험, 질병을 1개월 이상 관리</span></span></div>
+    </div>
+    <div class="iv rv">
+      <div class="hd"><span>설문 인사이트</span><span>인터뷰 의견</span><span>반례</span></div>
+      <div class="r"><div class="h"><span class="num">①</span><div><span class="chip fill">확인됨</span><b>설명이 비어 있다</b></div></div>
+        <div class="qq"><p><i>A</i>영양제를 중단하라는 말만 듣고 이유는 듣지 못했다.</p><p><i>C</i>진단 초기에 설명이 짧았고, 병용은 묻지도 듣지도 못했다.</p><p><i>D</i>어떤 영양제가 영향을 주는지 몰라 불안했다.</p></div>
+        <div class="ct"><p><i>B</i>는 약사의 설명이 충분했다.</p></div></div>
+      <div class="r"><div class="h"><span class="num">②</span><div><span class="chip fill">확인됨</span><b>사람보다 검색에 먼저 간다</b></div></div>
+        <div class="qq"><p>4명 모두 직접 검색했다.</p></div>
+        <div class="ct"><p><i>D</i>는 간호사인 언니에게 물었다.</p></div></div>
+      <div class="r"><div class="h"><span class="num">③</span><div><span class="chip red">확인 + 확장</span><b>질문하기도, 정보를 신뢰하기도 어렵다</b></div></div>
+        <div class="qq"><p><i>질문</i>A는 붐비는 약국에서 다시 묻기 어색했고, D는 진료실에서 긴장했다.</p><p><i>신뢰</i>B는 이중 확인했고, D는 수치·근거가 있는 정보만 신뢰했다.</p></div>
+        <div class="ct"><p class="no">—</p></div></div>
+      <div class="r"><div class="h"><span class="num">④</span><div><span class="chip red">새로 발견</span><b>궁금증은 약국·진료실을 나온 뒤에 생긴다</b></div></div>
+        <div class="qq"><p><i>A, D</i>의 경험에서 발견했다.</p></div>
+        <div class="ct"><p class="no">—</p></div></div>
+    </div>
+    <p class="src abs-src rv" style="bottom:90px">출처: 자체 인터뷰 4명(요약, 개인 식별 정보 제외)</p>
+  </section>
+
+  <!-- 7 Behavioral Archetype -->
+  <section class="slide" data-theme="soft">
+    <div class="eb rv"><span class="en">Behavioral Archetype</span><span class="tg">Discover</span></div>
+    <h2 class="t rv"><b>궁금증을 다루는 방식은 세 가지로 나뉜다</b></h2>
+    <div class="ar rv">
+      <div class="c"><span class="num">①</span><h3>스스로 해결형</h3>
+        <div class="w"><span class="chip">행동</span><p>궁금증이 생기면 대부분 어떻게든 해결한다.</p></div>
+        <div class="rp"><span class="k">대표 인터뷰</span><em>B</em></div></div>
+      <div class="c"><span class="num">②</span><h3>찾지만 신뢰하기 어려운형</h3>
+        <div class="w"><span class="chip">행동</span><p>찾아보지만 어떤 정보를 따를지 판단하기 어려워한다.</p></div>
+        <div class="rp"><span class="k">대표 인터뷰</span><em>D</em></div></div>
+      <div class="c"><span class="num">③</span><h3>질문도 못 하고 넘기는형</h3>
+        <div class="w"><span class="chip">행동</span><p>묻지 못하고 결국 넘긴다.</p></div>
+        <div class="rp"><span class="k">대표 인터뷰</span><em>A</em></div></div>
+    </div>
+    <p class="src abs-src rv" style="bottom:90px;font-size:14px">출처: 자체 설문(유효 52명)·인터뷰 4명</p>
+  </section>
+
+  <!-- 8 Insight -->
+  <section class="slide" data-theme="dark">
+    <div class="eb rv"><span class="en">Insight</span><span class="tg">Define</span></div>
+    <h2 class="t rv" style="font-size:44px"><b>설명은 빠져 있고, 돌아갈 길은 없고, 판단은 어렵다</b></h2>
+    <div class="ins-big rv">
+      <div class="s" tabindex="0"><span class="num">1</span><p>약 자체 설명은 있지만, 약과 함께 챙길 것(영양제·음식·운동)에 대한 설명이 빠져 있다.</p></div>
+      <div class="s" tabindex="0"><span class="num">2</span><p>궁금증은 현장 밖에서 생기는데, 돌아갈 길이 없다.</p></div>
+      <div class="s" tabindex="0"><span class="num">3</span><p>정보는 많지만, 내 상황에 맞는지 판단하기 어렵다.</p></div>
+    </div>
+<div class="hmw-ov" id="hmw-q" aria-live="polite"><p>어떻게 하면 처방약을 먹는 사람이 약과 <span style="white-space:nowrap">일상(영양제·음식)의</span> 상호작용을 쉽게 확인하고 판단할 수 있을까?</p></div>
+    <div class="hmw rv"><button class="hmw-btn" id="hmw-btn" type="button" aria-expanded="false" aria-controls="hmw-q"><span>HMW</span><i aria-hidden="true"></i></button></div>
+    <p class="src abs-src rv" style="bottom:90px">출처: 자체 설문(유효 52명)·인터뷰 4명</p>
+  </section>
+
+  <!-- 9 Painpoint -->
+  <section class="slide" data-theme="light">
+    <div class="eb rv"><span class="en">Opportunity</span><span class="tg">Define</span></div>
+    <h2 class="t rv"><b>페인포인트와 기존 서비스의 빈틈에서 기회영역을 발견하다</b></h2>
+    <div class="pp rv">
+      <div class="hdr"><span>단계</span><span>페인포인트</span><span>기존 서비스의 빈틈</span></div>
+      <div class="r"><div class="s"><i>01</i>진료·약국</div><div class="p">설명이 짧고 병용 설명이 없다</div><div class="g"><span>약·영양제 확인은 있지만, 내 하루 흐름 위에서 보여주는 곳은 없다</span></div></div>
+      <div class="r"><div class="s"><i>02</i>질문</div><div class="p">붐비는 곳에서 못 묻는다</div><div class="g"><span>약사 상담은 있지만, 궁금증을 적어 두었다가 물을 때 꺼내 볼 수 있는 곳은 없다</span></div></div>
+      <div class="r"><div class="s"><i>03</i>나온 뒤</div><div class="p">궁금증이 생겨도 돌아갈 곳이 없다</div><div class="g"><span>이력 조회와 복용 알림은 있지만, 처방 직후 먼저 오는 안내는 없다</span></div></div>
+      <div class="r"><div class="s"><i>04</i>검색·결정</div><div class="p">검색으로 해결하지만 정보가 흩어져 있고 신뢰하기 어렵다</div><div class="g"><span>흩어진 정보를 한곳에서 신뢰할 수 있게 보여주는 곳이 부족하다</span></div></div>
+    </div>
+    <div class="opp rv"><em>Opportunity</em>필요한 순간에 약과 일상의 상호작용을 한눈에 보고 신뢰할 수 있는 정보를 바탕으로 판단하는 경험이 필요하다.</div>
+    <p class="src abs-src rv" style="bottom:90px">기존 서비스 조사 범위 기준 (심평원 · 로그싱크 · 메디코치 · 커넥트허브 · Drugs.com · Medisafe). 출처: 자체 설문(유효 52명)·인터뷰 4명</p>
+  </section>
+
+  <!-- 10 가설 -->
+  <section class="slide" data-theme="soft">
+    <div class="eb rv"><span class="en">Hypothesis</span><span class="tg">Define</span></div>
+    <h2 class="t rv">Who · How · What</h2>
+    <div class="hy rv"><p>처방약을 먹는 사람이 처방약과 내 일상(영양제·음식 등)의 상호작용을 <b>하루 타임라인에서 한눈에</b> 볼 수 있으면, 같이 먹어도 되는지 판단하기 쉬워진다.</p></div>
+    <div class="cc3 rv">
+      <div class="cc"><div class="top"><span class="num">A</span><b>처방약과 하루의 조합</b></div>
+        <div class="w"><span class="chip fill">Who</span><p>스스로 확인하려는 사람</p></div>
+        <div class="w"><span class="chip fill">How</span><p>처방 이력을 불러와 상호작용을 타임라인에 겹쳐 보여주면</p></div>
+        <div class="w"><span class="chip fill">What</span><p>직접 합쳐 판단하는 수고가 줄어든다</p></div></div>
+      <div class="cc"><div class="top"><span class="num">B</span><b>먼저 다가가기</b></div>
+        <div class="w"><span class="chip fill">Who</span><p>찾지만 신뢰하기 어려운 사람</p></div>
+        <div class="w"><span class="chip fill">How</span><p>약을 받은 직후 간단한 입력만으로 상호작용 안내를 먼저 받으면</p></div>
+        <div class="w"><span class="chip fill">What</span><p>약국을 나선 뒤 혼자 검색하며 헤매는 일이 줄어든다</p></div></div>
+      <div class="cc"><div class="top"><span class="num">C</span><b>질문 준비</b></div>
+        <div class="w"><span class="chip fill">Who</span><p>질문을 못 하고 넘기는 사람</p></div>
+        <div class="w"><span class="chip fill">How</span><p>궁금할 때 바로 기록해두었다가 방문 전에 질문을 미리 정리해주면</p></div>
+        <div class="w"><span class="chip fill">What</span><p>현장에서 하려던 질문을 놓치지 않고 묻는다</p></div></div>
+    </div>
+  </section>
+
+  <!-- 11 컨셉 -->
+  <section class="slide" data-theme="dark">
+    <div class="eb rv"><span class="en">Concept</span><span class="tg">Develop</span></div>
+    <h2 class="t rv">3가지 컨셉과 아이디어</h2>
+    <div class="cd3 rv">
+      <div><div class="top"><span class="num">A</span><p class="lb">IDEA</p></div><h3>처방약과 내 하루의 조합을 한눈에 확인한다</h3>
+        <ul><li><span class="chip must">Must</span><span>하루 타임라인에 상호작용 표시하기</span></li><li><span class="chip should">Should</span><span>처방 이력 불러오기 및 나의 하루 타임라인 기록 (온보딩 &amp; 수정가능)</span></li><li><span class="chip nice">Nice</span><span>운동 주의·권장 사항 알림</span></li></ul></div>
+      <div><div class="top"><span class="num">B</span><p class="lb">IDEA</p></div><h3>필요한 순간에 먼저 다가간다</h3>
+        <ul><li><span class="chip must">Must</span><span>처방 직후 상호작용 안내 먼저 받기</span></li><li><span class="chip should">Should</span><span>처방 정보 자동 연동 혹은 직접 입력 (영양제는 간단히 입력)</span></li><li><span class="chip nice">Nice</span><span>복용 첫 3일간 이상 반응 체크</span></li></ul></div>
+      <div><div class="top"><span class="num">C</span><p class="lb">IDEA</p></div><h3>질문을 미리 준비해 준다</h3>
+        <ul><li><span class="chip must">Must</span><span>궁금증 바로 기록 (위젯, 메모, 음성메모)</span></li><li><span class="chip should">Should</span><span>방문 직전에 물어볼 질문 AI가 요약 후 제시</span></li><li><span class="chip nice">Nice</span><span>녹음 기능으로 의사 및 약사 답변 한 장으로 요약</span></li></ul></div>
+    </div>
+    <p class="lg rv">Must: 핵심 기능 · Should: 효과를 높이는 기능 · Nice: 확장 기능</p>
+    <div class="fin rv">
+      <div><span class="k">한계</span><span>설문은 질환 관리 전반을 넓게 물어 영양제와 처방약의 병용을 직접 묻는 문항이 없다. 좁히는 과정에서 병용 규모가 새로 필요한 질문으로 드러났다.</span></div>
+      <div><span class="k">다음</span><span>병용 규모는 보충 설문으로 확인하고, 유형별 인터뷰로 컨셉과 아이디어를 검증해 기말에서 깊게 디자인한다.</span></div>
+    </div>
+  </section>
+
+  <!-- 12 마무리 -->
+  <section class="slide cover" data-theme="light">
+    <h1 class="rv"><b>감사합니다</b></h1>
+  </section>
+
+  <div id="menu" aria-hidden="true"><button class="x" id="mclose">Close</button><ol id="mlist"></ol></div>
+  <footer id="ft">나의 일상에 들어온 처방약, 괜찮은 걸까? · 중간평가</footer>
+  <div id="dots"></div>
+  <div id="pg"></div>
+</div>
+</div>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var dotsEl=document.getElementById('dots');
+  var pg=document.getElementById('pg');
+  var menu=document.getElementById('menu');
+  var hd=document.getElementById('hd');
+  var mlist=document.getElementById('mlist');
+  var cur=0;
+  var titles=['표지','Overview','Framework','Background','Survey','Interview','Behavioral Archetype','Insight','Opportunity','Hypothesis','Concept','Thank you'];
+
+  slides.forEach(function(s,i){
+    var d=document.createElement('i');dotsEl.appendChild(d);
+    var li=document.createElement('li');
+    li.innerHTML='<button data-i="'+i+'"><i>'+String(i+1).padStart(2,'0')+'</i>'+titles[i]+'</button>';
+    mlist.appendChild(li);
+  });
+  var dots=[].slice.call(dotsEl.children);
+
+  function fit(){
+    var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);
+    stage.style.transform='scale('+s+')';
+  }
+  function go(n){
+    n=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(el,i){el.classList.toggle('active',i===n)});
+    dots.forEach(function(d,i){d.classList.toggle('on',i===n)});
+    var th=slides[n].getAttribute('data-theme');
+    document.body.className='th-'+th;
+    pg.textContent=String(n+1).padStart(2,'0')+' / '+slides.length;
+    cur=n;
+    try{history.replaceState(null,'','#'+(n+1))}catch(e){}
+  }
+  function openMenu(o){
+    menu.classList.toggle('open',o);
+    menu.setAttribute('aria-hidden',o?'false':'true');
+    hd.classList.toggle('hide',o);
+  }
+
+  var hmwBtn=document.getElementById('hmw-btn'),hmwSlide=hmwBtn.closest('.slide');
+  function hmwToggle(){
+    var on=hmwSlide.classList.toggle('hmw-open');
+    hmwBtn.setAttribute('aria-expanded',on?'true':'false');
+  }
+  hmwBtn.addEventListener('click',hmwToggle);
+  document.getElementById('hmw-q').addEventListener('click',hmwToggle);
+  document.getElementById('burger').addEventListener('click',function(){openMenu(true)});
+  document.getElementById('mclose').addEventListener('click',function(){openMenu(false)});
+  mlist.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    go(+b.getAttribute('data-i'));openMenu(false);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){openMenu(false);return}
+    if(menu.classList.contains('open'))return;
+    if((e.key===' '||e.key==='Enter')&&e.target.closest&&e.target.closest('.hmw-btn'))return;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '||e.key==='Enter'){e.preventDefault();go(cur+1)}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(cur-1)}
+    else if(e.key==='Home'){go(0)}
+    else if(e.key==='End'){go(slides.length-1)}
+  });
+  var tx=null;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(tx===null)return;
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>50)go(cur+(dx<0?1:-1));
+    tx=null;
+  });
+  // 휠로 넘기기 (살짝 쉬었다가 다음)
+  var lock=false;
+  document.addEventListener('wheel',function(e){
+    if(lock||menu.classList.contains('open')||Math.abs(e.deltaY)<20)return;
+    lock=true;go(cur+(e.deltaY>0?1:-1));
+    setTimeout(function(){lock=false},900);
+  },{passive:true});
+
+  window.addEventListener('resize',fit);
+  fit();
+  var start=parseInt(location.hash.slice(1),10);
+  go(isNaN(start)?0:start-1);
+})();
+</script>
+</body>
+</html>
