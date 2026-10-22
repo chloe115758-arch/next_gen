@@ -169,9 +169,12 @@ h2.t b{font-weight:700}
 .q3{display:grid;grid-template-columns:repeat(3,1fr);margin-top:26px;border-top:1px solid #fff}
 .q3>div{padding:26px 34px 10px 0;border-right:1px solid var(--ln);margin-right:34px}
 .q3>div:last-child{border:0;margin:0}
-.q3 h3{font-size:22px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.q3 h3{display:flex;align-items:flex-start;gap:14px;font-size:22px;font-weight:700;margin-bottom:32px;line-height:1.35;min-height:calc(2*1.35em)}
+.q3 h3 .qn{flex:none;color:#6fc3b5}
+.q3 h3 .qt{text-align:left}
 .gl{font-size:18px;line-height:1.4;color:var(--fg-2);margin:0 0 12px}
 .q3 .gl{margin-top:28px}
+.q3 .lg+.hb{margin-top:28px}
 .big{display:flex;align-items:baseline;gap:16px;margin-bottom:16px;white-space:nowrap}
 .big .n{font-family:var(--serif);font-size:56px;font-weight:700;line-height:1;letter-spacing:-.03em;color:#6fc3b5}
 .big .n small{font-size:30px}
@@ -207,7 +210,7 @@ h2.t b{font-weight:700}
 .iv{margin-top:22px;border-top:1px solid var(--ink)}
 .iv .hd,.iv .r{display:grid;grid-template-columns:540px 1fr 440px;gap:30px}
 .iv .hd{padding:10px 0;font-size:16px;font-weight:600;color:var(--mut);border-bottom:1px solid var(--line)}
-.iv .r{padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+.iv .r{min-height:140px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
 .iv .h{display:flex;gap:16px;align-items:flex-start}
 .iv .h .num{font-size:40px;line-height:1;color:var(--red)}
 .iv .h .chip{font-size:14px;margin-bottom:8px}
@@ -366,12 +369,12 @@ h2.t b{font-weight:700}
     <div class="eb rv"><span class="en">Overview</span><span class="tg">Discover</span></div>
     <dl class="ov3 rv">
       <div class="r"><dt>문제점 발견</dt><dd>처방약을 받은 직후 평소 먹던 영양제를 함께 먹어도 되는지 모르겠다.</dd></div>
-      <div class="r"><dt>문제의식</dt><dd>처방약을 받은 뒤에도 기존에 복용하던 영양제와의 상호작용을 사용자가 스스로 확인해야 하는 것은 아닐까?</dd></div>
+      <div class="r"><dt>확장 사고</dt><dd>만성질환자는 병용을 많이 할 텐데, 어떻게 정보를 얻고 관리할까?</dd></div>
       <div class="r"><dt>탐구 질문</dt>
         <dd><div class="qs3">
           <div><span class="num">1</span><p>사람들은 처방약을 받고 나와 같은 궁금증이 들까?</p></div>
           <div><span class="num">2</span><p>든다면 어떻게 해결할까?</p></div>
-          <div><span class="num">3</span><p>해결하지 못하는 것들은 무엇일까?</p></div>
+          <div><span class="num">3</span><p>해결하지 못한 경험은 얼마나 있고, 그 이유는 무엇일까?</p></div>
         </div></dd></div>
     </dl>
   </section>
@@ -385,7 +388,7 @@ h2.t b{font-weight:700}
       <div class="ddlist">
         <div><p class="n">Discover <i>발산</i></p><p class="d">문제점 발견 · 데스크리서치 · 설문 · 인터뷰</p></div>
         <div><p class="n">Define <i>수렴</i></p><p class="d">최종 리서치 인사이트 · 페인포인트 · 가설 세우기</p></div>
-        <div><p class="n">Develop <i>발산</i></p><p class="d"><b>컨셉 3가지</b>와 아이디어 검증 후</p></div>
+        <div><p class="n">Develop <i>발산</i></p><p class="d"><b>컨셉 3가지</b>와 아이디어 도출</p></div>
         <div><p class="n">Deliver <i>수렴</i></p><p class="d">컨셉을 검증하고 발전시켜 기말에서 완성도 높게 디자인한다.</p></div>
       </div>
     </div>
@@ -407,24 +410,24 @@ h2.t b{font-weight:700}
           <li><i>식약처</i><span>약을 먹는 중이라면 건강기능식품을 먹기 전에 의사와 상담하라고 권고한다.</span></li>
         </ul></div>
     </div>
-    <div class="ban rv"><em>Insight</em>처방 이후에 이어지는 일상과 처방약에 대한 의문은 환자 스스로 해결해야 한다.</div>
+    <div class="ban rv"><em>Insight</em>처방 이후에 이어지는 일상과 처방약은 서로 상호작용하며, 이에 대한 의문은 대부분 환자 스스로 해결하고 있다.</div>
     <p class="src abs-src rv">출처: PMC12398989 · 2025 인터넷이용실태조사 · 한국의약통신 「약과 영양제 병용, 안전할까?」(식약처·MSD 매뉴얼 인용) · MSD 매뉴얼 「약물 상호작용」</p>
   </section>
 
   <!-- 5 Survey -->
   <section class="slide" data-theme="dark">
     <div class="eb rv"><span class="en">Survey</span><span class="tg">Discover</span></div>
-    <h2 class="t rv"><b>상호작용 설명은 부족했고, 해결은 검색에 기댔다</b></h2>
+    <h2 class="t rv"><b>설명이 부족해 검색에 기대지만, 그 정보마저 신뢰하기 어렵다</b></h2>
     <p class="pop rv"><span class="chip">응답자</span>52명 (만 18~65세)<span class="src" style="margin-left:auto"><span class="chip">Tool</span> Google Form</span></p>
     <div class="q3 rv">
-      <div><h3>질문 1. 같은 궁금증이 들까?</h3>
+      <div><h3><span class="qn">질문 1.</span><span class="qt">같은 궁금증이 들까?</span></h3>
         <div class="big"><span class="n">82.7<small>%</small></span><p>설명이 부족했다 (부족 + 전혀)</p></div>
         <div class="sb"><i class="c0" style="width:17.3%">17.3</i><i class="c2" style="width:40.4%">40.4</i><i class="c1" style="width:42.3%">42.3</i></div>
         <ul class="lg"><li><b class="c0"></b>충분히</li><li><b class="c2"></b>부족</li><li><b class="c1"></b>전혀</li></ul>
         <p class="gl">가장 알고 싶은 영역</p>
         <div class="big"><span class="n">61.5<small>%</small></span><p>상호작용이 1위</p></div>
         <div class="ib"><span>Insight 1</span><p>약과 함께 챙길 것에 대한 설명이 가장 비어 있다.</p></div></div>
-      <div><h3>질문 2. 든다면 어떻게 해결할까?</h3>
+      <div><h3><span class="qn">질문 2.</span><span class="qt">든다면 어떻게 해결할까?</span></h3>
         <div class="big"><span class="n">71.2<small>%</small></span><p>인터넷 검색으로 해결한다</p></div>
         <div class="hb on"><span class="k">인터넷 검색<b>71.2%</b></span><span class="tr"><i style="width:71.2%"></i></span></div>
         <div class="hb"><span class="k">약사 문의<b>9.6%</b></span><span class="tr"><i style="width:9.6%"></i></span></div>
@@ -432,11 +435,10 @@ h2.t b{font-weight:700}
         <div class="hb"><span class="k">병원 콜센터·간호사<b>3.8%</b></span><span class="tr"><i style="width:3.8%"></i></span></div>
         <div class="hb"><span class="k">기타<b>5.8%</b></span><span class="tr"><i style="width:5.8%"></i></span></div>
         <div class="ib"><span>Insight 2</span><p>직접 질문보다 검색으로 해결한다.</p></div></div>
-      <div><h3>질문 3. 해결하지 못하는 것들은 무엇일까?</h3>
+      <div><h3><span class="qn">질문 3.</span><span class="qt">해결하지 못한 경험은<br>얼마나 있고, 그 이유는 무엇일까?</span></h3>
         <div class="big"><span class="n">57.7<small>%</small></span><p>몇 번 이상 해결 못 했다</p></div>
         <div class="sb"><i class="c0" style="width:3.8%"></i><i class="c0" style="width:38.5%">38.5</i><i class="c2" style="width:26.9%">26.9</i><i class="c2" style="width:13.5%">13.5</i><i class="c1" style="width:17.3%">17.3</i></div>
         <ul class="lg"><li><b class="c0"></b>해결</li><li><b class="c2"></b>몇 번</li><li><b class="c2"></b>여러 번</li><li><b class="c1"></b>방치</li></ul>
-        <p class="gl">해결하지 못한 이유</p>
         <div class="hb on"><span class="k">정보가 달라 신뢰하기 어려움<b>46.2%</b></span><span class="tr"><i style="width:46.2%"></i></span></div>
         <div class="hb on"><span class="k">진료 시간 부족<b>42.3%</b></span><span class="tr"><i style="width:42.3%"></i></span></div>
         <div class="hb on"><span class="k">분위기상 묻지 못함<b>28.8%</b></span><span class="tr"><i style="width:28.8%"></i></span></div>
@@ -462,9 +464,6 @@ h2.t b{font-weight:700}
         <div class="ct"><p><i>D</i>는 간호사인 언니에게 물었다.</p></div></div>
       <div class="r"><div class="h"><span class="num">③</span><div><span class="chip red">확인 + 확장</span><b>질문하기도, 정보를 신뢰하기도 어렵다</b></div></div>
         <div class="qq"><p><i>질문</i>A는 붐비는 약국에서 다시 묻기 어색했고, D는 진료실에서 긴장했다.</p><p><i>신뢰</i>B는 이중 확인했고, D는 수치·근거가 있는 정보만 신뢰했다.</p></div>
-        <div class="ct"><p class="no">—</p></div></div>
-      <div class="r"><div class="h"><span class="num">④</span><div><span class="chip red">새로 발견</span><b>궁금증은 약국·진료실을 나온 뒤에 생긴다</b></div></div>
-        <div class="qq"><p><i>A, D</i>의 경험에서 발견했다.</p></div>
         <div class="ct"><p class="no">—</p></div></div>
     </div>
     <p class="src abs-src rv" style="bottom:90px">출처: 자체 인터뷰 4명(요약, 개인 식별 정보 제외)</p>
@@ -507,13 +506,12 @@ h2.t b{font-weight:700}
     <div class="eb rv"><span class="en">Opportunity</span><span class="tg">Define</span></div>
     <h2 class="t rv"><b>페인포인트와 기존 서비스의 빈틈에서 기회영역을 발견하다</b></h2>
     <div class="pp rv">
-      <div class="hdr"><span>단계</span><span>페인포인트</span><span>기존 서비스의 빈틈</span></div>
+      <div class="hdr"><span>단계</span><span>페인포인트</span><span>기존 서비스의 빈틈 + 기회영역</span></div>
       <div class="r"><div class="s"><i>01</i>진료·약국</div><div class="p">설명이 짧고 병용 설명이 없다</div><div class="g"><span>약·영양제 확인은 있지만, 내 하루 흐름 위에서 보여주는 곳은 없다</span></div></div>
       <div class="r"><div class="s"><i>02</i>질문</div><div class="p">붐비는 곳에서 못 묻는다</div><div class="g"><span>약사 상담은 있지만, 궁금증을 적어 두었다가 물을 때 꺼내 볼 수 있는 곳은 없다</span></div></div>
       <div class="r"><div class="s"><i>03</i>나온 뒤</div><div class="p">궁금증이 생겨도 돌아갈 곳이 없다</div><div class="g"><span>이력 조회와 복용 알림은 있지만, 처방 직후 먼저 오는 안내는 없다</span></div></div>
       <div class="r"><div class="s"><i>04</i>검색·결정</div><div class="p">검색으로 해결하지만 정보가 흩어져 있고 신뢰하기 어렵다</div><div class="g"><span>흩어진 정보를 한곳에서 신뢰할 수 있게 보여주는 곳이 부족하다</span></div></div>
     </div>
-    <div class="opp rv"><em>Opportunity</em>필요한 순간에 약과 일상의 상호작용을 한눈에 보고 신뢰할 수 있는 정보를 바탕으로 판단하는 경험이 필요하다.</div>
     <p class="src abs-src rv" style="bottom:90px">기존 서비스 조사 범위 기준 (심평원 · 로그싱크 · 메디코치 · 커넥트허브 · Drugs.com · Medisafe). 출처: 자체 설문(유효 52명)·인터뷰 4명</p>
   </section>
 
@@ -521,7 +519,7 @@ h2.t b{font-weight:700}
   <section class="slide" data-theme="soft">
     <div class="eb rv"><span class="en">Hypothesis</span><span class="tg">Define</span></div>
     <h2 class="t rv">Who · How · What</h2>
-    <div class="hy rv"><p>처방약을 먹는 사람이 처방약과 내 일상(영양제·음식 등)의 상호작용을 <b>하루 타임라인에서 한눈에</b> 볼 수 있으면, 같이 먹어도 되는지 판단하기 쉬워진다.</p></div>
+    <div class="hy rv"><p>처방약을 먹는 사람이 처방약과 내 일상(영양제·음식 등)의 상호작용을 <b>하루 타임라인에서 한눈에</b> 볼 수 있으면,<br>같이 먹어도 되는지 판단하기 쉬워진다.</p></div>
     <div class="cc3 rv">
       <div class="cc"><div class="top"><span class="num">A</span><b>처방약과 하루의 조합</b></div>
         <div class="w"><span class="chip fill">Who</span><p>스스로 확인하려는 사람</p></div>
@@ -546,14 +544,14 @@ h2.t b{font-weight:700}
       <div><div class="top"><span class="num">A</span><p class="lb">IDEA</p></div><h3>처방약과 내 하루의 조합을 한눈에 확인한다</h3>
         <ul><li><span class="chip must">Must</span><span>하루 타임라인에 상호작용 표시하기</span></li><li><span class="chip should">Should</span><span>처방 이력 불러오기 및 나의 하루 타임라인 기록 (온보딩 &amp; 수정가능)</span></li><li><span class="chip nice">Nice</span><span>운동 주의·권장 사항 알림</span></li></ul></div>
       <div><div class="top"><span class="num">B</span><p class="lb">IDEA</p></div><h3>필요한 순간에 먼저 다가간다</h3>
-        <ul><li><span class="chip must">Must</span><span>처방 직후 상호작용 안내 먼저 받기</span></li><li><span class="chip should">Should</span><span>처방 정보 자동 연동 혹은 직접 입력 (영양제는 간단히 입력)</span></li><li><span class="chip nice">Nice</span><span>복용 첫 3일간 이상 반응 체크</span></li></ul></div>
+        <ul><li><span class="chip must">Must</span><span>처방 직후 상호작용 안내 먼저 받기 (출처·약사 확인 포함)</span></li><li><span class="chip should">Should</span><span>처방 정보 자동 연동 혹은 직접 입력 (영양제는 간단히 입력)</span></li><li><span class="chip nice">Nice</span><span>안내에서 생긴 궁금증을 질문으로 저장</span></li></ul></div>
       <div><div class="top"><span class="num">C</span><p class="lb">IDEA</p></div><h3>질문을 미리 준비해 준다</h3>
-        <ul><li><span class="chip must">Must</span><span>궁금증 바로 기록 (위젯, 메모, 음성메모)</span></li><li><span class="chip should">Should</span><span>방문 직전에 물어볼 질문 AI가 요약 후 제시</span></li><li><span class="chip nice">Nice</span><span>녹음 기능으로 의사 및 약사 답변 한 장으로 요약</span></li></ul></div>
+        <ul><li><span class="chip must">Must</span><span>궁금증·복용 후 반응 바로 기록 (위젯, 메모, 음성메모)</span></li><li><span class="chip should">Should</span><span>방문 직전에 내 기록에서 물어볼 질문을 AI가 요약해 제시</span></li><li><span class="chip nice">Nice</span><span>녹음 기능으로 의사 및 약사 답변 한 장으로 요약</span></li></ul></div>
     </div>
     <p class="lg rv">Must: 핵심 기능 · Should: 효과를 높이는 기능 · Nice: 확장 기능</p>
     <div class="fin rv">
       <div><span class="k">한계</span><span>설문은 질환 관리 전반을 넓게 물어 영양제와 처방약의 병용을 직접 묻는 문항이 없다. 좁히는 과정에서 병용 규모가 새로 필요한 질문으로 드러났다.</span></div>
-      <div><span class="k">다음</span><span>병용 규모는 보충 설문으로 확인하고, 유형별 인터뷰로 컨셉과 아이디어를 검증해 기말에서 깊게 디자인한다.</span></div>
+      <div><span class="k">다음</span><span>병용 규모는 보충 설문으로 확인하고 컨셉과 아이디어를 다각도로 검증 후 깊게 디자인한다.</span></div>
     </div>
   </section>
 
