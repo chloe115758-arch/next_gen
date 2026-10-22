@@ -87,6 +87,9 @@ h2.t b{font-weight:700}
 
 /* 1 표지 */
 .cover{display:flex;flex-direction:column;justify-content:center;padding-top:110px}
+.cover.end{background:linear-gradient(to right,#dfcfbb calc(100% - 1462px),rgba(223,207,187,0) calc(100% - 1062px)),url(closing-bg.jpg) right center/auto 100% no-repeat #dfcfbb}
+.cover.end::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.72)}
+.cover.end h1{position:relative}
 .cover .lab{font-size:22px;font-weight:600;color:var(--ink-2);margin-bottom:34px}
 .cover h1{font-size:112px;line-height:1.18;font-weight:300;letter-spacing:-.05em}
 .cover h1 b{font-weight:800}
@@ -556,7 +559,7 @@ h2.t b{font-weight:700}
   </section>
 
   <!-- 12 마무리 -->
-  <section class="slide cover" data-theme="light">
+  <section class="slide cover end" data-theme="light">
     <h1 class="rv"><b>감사합니다</b></h1>
   </section>
 
