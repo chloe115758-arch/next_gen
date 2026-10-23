@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세 컨셉은 하나의 여정 · 인터랙티브 시연</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<script>if(/[?&]embed/.test(location.search))document.documentElement.className='embed'</script>
+<style>
+:root{
+  --ink:#3e3f44;--ink-2:#6b6d74;--mut:#a1a1a1;--line:#e5e5e5;--soft:#f4f5f6;--dark:#141414;
+  --red:#f03a3a;--red-soft:#fdeaea;--ok:#1f9d63;--ok-soft:#e6f6ee;--ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:'Pretendard',-apple-system,sans-serif;color:var(--ink);background:#fff;word-break:keep-all;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit}
+
+.wrap{max-width:1280px;margin:0 auto;padding:56px 48px 64px;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:72px;align-items:center;min-height:100vh}
+
+/* 좌측: 여정 */
+.eb{display:flex;gap:14px;align-items:center;font-size:15px;font-weight:700;letter-spacing:.04em;margin-bottom:22px}
+.eb .en{color:var(--ink)}.eb .tg{color:var(--mut);font-weight:500}
+h1{font-size:44px;line-height:1.25;font-weight:800;letter-spacing:-.02em;color:#222;margin-bottom:18px}
+.lead{font-size:19px;line-height:1.65;color:var(--ink-2);max-width:620px;margin-bottom:40px}
+
+.steps{list-style:none;position:relative;display:grid;gap:14px}
+.steps::before{content:'';position:absolute;left:27px;top:30px;bottom:30px;width:2px;background:var(--line)}
+.step{position:relative;display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start;text-align:left;width:100%;padding:18px 22px 18px 0;border-radius:16px;transition:background .4s var(--ease)}
+.step .dot{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid var(--line);display:grid;place-items:center;font-size:22px;font-weight:800;color:var(--mut);transition:all .4s var(--ease)}
+.step .when{font-size:14px;font-weight:700;color:var(--mut);margin-bottom:4px;letter-spacing:.02em}
+.step h3{font-size:22px;font-weight:700;color:#222;line-height:1.35;margin-bottom:8px}
+.step.on{background:var(--soft);padding-left:0}
+.step.on .dot{background:var(--dark);border-color:var(--dark);color:#fff}
+.step.done .dot{background:#fff;border-color:var(--dark);color:var(--dark)}
+.step:not(.on):hover h3{color:var(--red)}
+.step.on .body{padding-right:6px}
+
+.fl{display:grid;gap:5px;margin:0 0 6px}
+.fl .f{display:flex;gap:7px;align-items:center;font-size:12px;color:var(--ink-2);line-height:1.4}
+.lock .fl .f{color:#fff;opacity:.85}
+.fc{flex:none;display:inline-block;font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 7px;letter-spacing:.02em}
+.fc.must{background:var(--red)}.fc.should{background:#3e3f44}.lock .fc.should{background:#fff;color:#222}
+.fc.nice{background:#fff;color:var(--ink-2);box-shadow:0 0 0 1.2px var(--mut) inset}
+.soon{display:flex;gap:10px;align-items:flex-start;border:1.5px dashed var(--line);border-radius:14px;padding:12px 14px;margin:14px 0 6px;font-size:13px;line-height:1.5;color:var(--ink-2)}
+.step .fx{display:none;margin-top:10px;gap:12px}
+.step.on .fx{display:grid}
+.fx p{font-size:15px;line-height:1.55;color:var(--ink-2)}
+.fx p .fc{margin-right:8px;vertical-align:1px;font-size:12px;padding:2px 8px}
+.fx p b{color:#222;font-weight:700}
+.note{margin-top:30px;font-size:14px;color:var(--mut);line-height:1.6}
+
+/* 우측: 폰 */
+.phone-col{display:flex;flex-direction:column;align-items:center;gap:16px}
+.phone{width:390px;height:800px;border-radius:52px;background:#0c0c0d;padding:12px;box-shadow:0 40px 80px -30px rgba(0,0,0,.45),0 0 0 1.5px #2a2a2c inset;position:relative}
+.screen{position:relative;width:100%;height:100%;border-radius:42px;background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.sb{flex:none;height:46px;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0;font-size:14px;font-weight:700}
+.sb .home{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;background:rgba(127,127,127,.14);color:inherit;position:relative;z-index:6}
+.sb .home:hover{background:rgba(127,127,127,.28)}
+.sb i{font-style:normal;font-size:12px;letter-spacing:.1em}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:104px;height:28px;border-radius:20px;background:#0c0c0d;z-index:5}
+.view{flex:1;min-height:0;display:flex;flex-direction:column;animation:in .55s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.pad{padding:8px 22px 22px;flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}
+.pad::-webkit-scrollbar{display:none}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--mut);margin-bottom:8px}
+.h{font-size:23px;line-height:1.35;font-weight:800;color:#222;letter-spacing:-.01em;margin-bottom:8px}
+.sub{font-size:14.5px;line-height:1.55;color:var(--ink-2);margin-bottom:18px}
+.cta{flex:none;margin:0 22px 26px;padding:16px;border-radius:16px;background:var(--dark);color:#fff;font-size:16px;font-weight:700;text-align:center;transition:transform .25s var(--ease),opacity .3s}
+.cta:hover{transform:translateY(-2px)}
+.cta:disabled{opacity:.3;cursor:default;transform:none}
+.cta.ghost{background:var(--soft);color:var(--ink)}
+.row2{display:flex;gap:10px;margin:0 22px 26px}.row2 .cta{margin:0;flex:1}
+
+/* 잠금화면 (B) */
+.lock{background:linear-gradient(180deg,#2b2d33,#101114);color:#fff}
+.lock .sb{color:#fff}
+.lock .clock{text-align:center;margin-top:46px}
+.lock .clock b{display:block;font-size:76px;font-weight:300;letter-spacing:-.03em;line-height:1}
+.lock .clock span{font-size:16px;opacity:.7}
+.push{margin:56px 16px 0;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.16);backdrop-filter:blur(14px);text-align:left;width:calc(100% - 32px);color:#fff;animation:drop .8s var(--ease) .5s both;position:relative}
+@keyframes drop{from{opacity:0;transform:translateY(-30px) scale(.96)}to{opacity:1;transform:none}}
+.push .app{display:flex;align-items:center;gap:8px;font-size:12px;opacity:.8;margin-bottom:6px;font-weight:600}
+.push .app i{width:18px;height:18px;border-radius:5px;background:var(--red);display:inline-block}
+.push p{font-size:15px;line-height:1.45;font-weight:600}
+.push::after{content:'';position:absolute;inset:-6px;border-radius:26px;border:2px solid rgba(255,255,255,.5);animation:ping 1.8s ease-out 1.4s infinite}
+@keyframes ping{from{opacity:.9;transform:scale(.98)}to{opacity:0;transform:scale(1.06)}}
+.lock .hint{position:absolute;bottom:34px;left:0;right:0;text-align:center;font-size:13px;opacity:.55}
+
+/* 칩 */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{padding:11px 16px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:600;color:var(--ink);background:#fff;transition:all .25s var(--ease)}
+.chip.on{background:var(--dark);border-color:var(--dark);color:#fff}
+.card{border-radius:18px;background:var(--soft);padding:18px;margin-bottom:12px}
+.card.warn{background:var(--red-soft)}
+.card.okc{background:var(--ok-soft)}
+.card h4{font-size:16.5px;font-weight:800;color:#222;margin-bottom:6px;line-height:1.4}
+.card p{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.card .ic{display:inline-block;font-size:12px;font-weight:800;color:#fff;background:var(--red);border-radius:5px;padding:2px 7px;margin-bottom:8px}
+.card.okc .ic{background:var(--ok)}
+.meta{display:grid;gap:8px;margin-bottom:12px}
+.meta div{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--ink-2);padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;line-height:1.4}
+.meta div b{color:#222;flex:none;font-size:12px}
+.meta .v{margin-left:auto;color:var(--ok);font-weight:800;font-size:12px;flex:none}
+.memo{margin-top:16px;padding:16px;border-radius:18px;border:1.5px solid var(--line)}
+.memo .mh{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:15px;color:#222}
+.memo .mi{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--soft);font-size:16px}
+.memo .inrow{margin-bottom:4px}
+.memo .rec-item:last-child{border-bottom:0}
+.link{font-size:14px;font-weight:700;color:var(--ink);border-bottom:1.5px solid currentColor;padding-bottom:2px;margin-top:4px}
+.link.saved{color:var(--ok);border-color:transparent;cursor:default}
+
+/* 타임라인 (A) */
+.tl{position:relative;height:var(--th);margin:6px 0 4px 54px;border-left:2px solid var(--line)}
+.tl .hr{position:absolute;left:-54px;width:44px;text-align:right;font-size:12px;color:var(--mut);font-weight:600;transform:translateY(-8px)}
+.tl .hr::after{content:'';position:absolute;left:50px;top:8px;width:6px;height:2px;background:var(--line)}
+.win{position:absolute;left:0;right:0;background:repeating-linear-gradient(135deg,rgba(240,58,58,.13) 0 8px,rgba(240,58,58,.06) 8px 16px);border-left:3px solid var(--red);transition:all .5s var(--ease)}
+.win span{position:absolute;right:8px;top:6px;font-size:11px;font-weight:700;color:var(--red)}
+.ev{position:absolute;left:14px;right:6px;height:34px;transform:translateY(-17px);display:flex;align-items:center;gap:10px;padding:0 14px;border-radius:12px;background:#fff;border:1.5px solid var(--line);font-size:14px;font-weight:700;color:#222;transition:top .5s var(--ease),background .3s,border-color .3s;box-shadow:0 2px 8px -4px rgba(0,0,0,.15)}
+.ev em{font-style:normal;font-size:12px;font-weight:600;color:var(--mut);margin-left:auto}
+.ev.med{background:var(--dark);border-color:var(--dark);color:#fff}
+.ev.med em{color:#bbb}
+.ev.meal{background:var(--soft);border-style:dashed;box-shadow:none}
+.ev.bad{background:var(--red-soft);border-color:var(--red);color:var(--red);animation:pulse 1.6s ease-in-out infinite}
+.ev.bad em{color:var(--red)}
+.ev.good{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.ev.good em{color:var(--ok)}
+@keyframes pulse{50%{box-shadow:0 0 0 5px rgba(240,58,58,.14)}}
+.mv{margin:6px 0 12px;padding:14px 16px;border-radius:16px;background:var(--soft)}
+.mv label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.mv label b{color:var(--red)}
+.mv label b.g{color:var(--ok)}
+input[type=range]{width:100%;accent-color:var(--dark);height:4px}
+
+/* 기록 (C) */
+.tabs{display:flex;gap:6px;padding:0 22px 12px}
+.tabs button{flex:1;padding:11px;border-radius:12px;font-size:14px;font-weight:700;color:var(--mut);background:var(--soft);transition:all .3s var(--ease)}
+.tabs button.on{background:var(--dark);color:#fff}
+.ta{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;font-size:15px;margin-bottom:10px;outline:none;transition:border-color .2s}
+.ta:focus{border-color:var(--dark)}
+.inrow{display:flex;gap:8px;margin-bottom:18px}
+.inrow .ta{margin:0;flex:1}
+.mic{flex:none;width:50px;border-radius:14px;background:var(--soft);font-size:20px;transition:all .3s}
+.mic.rec{background:var(--red);animation:pulse 1s infinite}
+.add{flex:none;padding:0 18px;border-radius:14px;background:var(--dark);color:#fff;font-weight:700;font-size:14px}
+.lbl{font-size:13px;font-weight:700;color:var(--mut);margin:6px 0 10px}
+.rec-item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.5;color:#222;animation:in .5s var(--ease)}
+.rec-item .k{flex:none;font-size:11px;font-weight:800;border-radius:6px;padding:3px 8px;margin-top:2px;background:var(--soft);color:var(--ink-2)}
+.rec-item .k.q{background:var(--dark);color:#fff}
+.rec-item .k.r{background:var(--red-soft);color:var(--red)}
+.rec-item small{display:block;font-size:12px;color:var(--mut);margin-top:2px}
+.q-item{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:15px 16px;border-radius:16px;border:1.5px solid var(--line);margin-bottom:10px;font-size:14.5px;line-height:1.5;color:#222;font-weight:600;transition:all .25s var(--ease)}
+.q-item i{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;color:#fff;margin-top:1px}
+.q-item small{display:block;font-weight:500;font-size:12px;color:var(--mut);margin-top:3px}
+.q-item.on{border-color:var(--dark);background:var(--soft)}
+.q-item.on i{background:var(--dark);border-color:var(--dark)}
+.final{background:var(--dark);color:#fff;border-radius:20px;padding:20px;margin-top:6px}
+.final h4{font-size:15px;margin-bottom:12px;opacity:.8;font-weight:600}
+.final ol{padding-left:20px;font-size:15px;line-height:1.7;font-weight:600}
+.empty{padding:30px 0;text-align:center;color:var(--mut);font-size:14px}
+
+.ctrl{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--mut)}
+.ctrl button{padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);font-weight:600;color:var(--ink-2);transition:all .25s}
+.ctrl button:hover{border-color:var(--dark);color:var(--dark)}
+
+/* 슬라이드(index.html) 임베드용 */
+.embed body{background:transparent;overflow:hidden}
+.embed .wrap{max-width:none;padding:0;min-height:0;height:100vh;gap:96px;grid-template-columns:minmax(0,1fr) 390px;align-items:start}
+.embed .left{padding-top:178px}
+.embed .left>.eb,.embed .left>h1,.embed .left>.lead,.embed .note,.embed #reset,.embed .ctrl{display:none}
+.embed .steps{max-width:980px}
+.embed .phone-col{height:100%;justify-content:center}
+.embed .phone{height:780px;box-shadow:0 24px 40px -24px rgba(0,0,0,.4),0 0 0 1.5px #2a2a2c inset}
+.embed .step{grid-template-columns:72px 1fr;gap:28px;padding:20px 28px 20px 0}
+.embed .step .dot{width:72px;height:72px;font-size:28px}
+.embed .steps::before{left:35px}
+.embed .step .when{font-size:18px}
+.embed .step h3{font-size:32px;margin-bottom:10px}
+.embed .fx{gap:16px}
+.embed .fx p{font-size:20px}
+.embed .fx p .fc{font-size:15px;padding:3px 10px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:48px;padding:40px 24px;justify-items:center}
+  .left{width:100%;max-width:640px}
+  h1{font-size:34px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <section class="left">
+    <div class="eb"><span class="en">Concept Journey</span><span class="tg">Develop</span></div>
+    <h1>세 컨셉은<br>하나의 여정입니다</h1>
+    <p class="lead">처방받은 직후에는 A가 안내를 먼저 보내고, 복용하는 동안에는 B가 겹침 보여주고, 다음 방문 전에는 C가 기록해 둔 궁금증에서 물을 질문을 고르게 합니다.</p>
+
+    <ol class="steps" id="steps"></ol>
+    <p class="note">오른쪽 화면을 직접 눌러 보세요. 앞 단계에서 입력한 영양제와 저장한 궁금증이 다음 단계로 이어집니다.<br>예시 데이터를 사용한 시연 화면이며 실제 의료 조언이 아닙니다.</p>
+  </section>
+
+  <section class="phone-col">
+    <div class="phone"><div class="notch"></div><div class="screen" id="screen"></div></div>
+    <div class="ctrl"><button id="reset" type="button">처음부터 다시</button></div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var STEPS=[
+    {k:'A',when:'처방받은 직후',h:'안내가 먼저 도착한다',f:[
+      ['must','출처와 약사 확인을 포함한 처방 직후 안내','약을 받자마자 알림으로 먼저 도착하고, 근거와 약사 확인이 함께 보입니다.'],
+      ['should','처방 정보 자동 연동 혹은 직접 입력','처방 정보를 연동하거나, 영양제만 간단히 눌러 입력하면 안내가 내게 맞춰집니다.'],
+      ['nice','안내에서 생긴 궁금증을 질문으로 저장','안내를 읽다 생긴 의문을 바로 질문으로 남겨 C로 이어줍니다.']]},
+    {k:'B',when:'복용하는 동안',h:'내 하루 위에서 겹침을 본다',f:[
+      ['must','타임라인에 상호작용 표시','약과 영양제의 겹침을 하루 시간 위에 한눈에 보여줍니다.'],
+      ['should','처방 이력 불러오기 및 나의 하루 타임라인 기록','처방 이력과 내 하루를 온보딩으로 채우고, 시간은 언제든 수정할 수 있습니다.'],
+      ['nice','운동 주의·권장 사항 알림','운동처럼 약과 함께 챙길 일상 항목까지 알림으로 확장합니다.']]},
+    {k:'C',when:'다음 방문 전',h:'기록에서 물을 질문을 고른다',f:[
+      ['must','궁금증과 복용 후 반응 기록','위젯·메모·음성메모로 떠오를 때 바로 남깁니다.'],
+      ['should','방문 직전 AI 질문 요약 제시','쌓인 기록에서 물어볼 질문을 AI가 요약해 제안합니다.'],
+      ['nice','녹음 기능으로 답변 한 장 요약','의사·약사의 답변을 녹음해 한 장으로 정리해 줍니다.']]}
+  ];
+  var CAP={must:'Must',should:'Should',nice:'Nice'};
+  function fc(t){return '<span class="fc '+t+'">'+CAP[t]+'</span>'}
+  function feats(a){return '<div class="fl">'+a.map(function(x){return '<div class="f">'+fc(x[0])+'<span>'+x[1]+'</span></div>'}).join('')+'</div>'}
+  var SUPPS=['칼슘','철분','오메가3','비타민D'];
+  var REACT=['피곤함','두근거림','속쓰림','어지러움'];
+  var S;
+  function fresh(){S={stage:0,bStep:0,supps:[],calTime:9,cTab:0,records:[],picked:{},finished:false,rec:false,reactSel:null}}
+  fresh();
+
+  var el=document.getElementById('screen'),stepsEl=document.getElementById('steps');
+  function $(h){var d=document.createElement('div');d.innerHTML=h;return d.firstElementChild}
+  function sb(dark){return '<div class="sb"><span>9:41</span><button class="home" type="button" data-reset aria-label="처음으로 되돌리기">↺ 처음으로</button></div>'}
+  function fmt(h){return String(h).padStart(2,'0')+':00'}
+  function iron(){return S.supps.indexOf('칼슘')>-1?'칼슘':(S.supps.indexOf('철분')>-1?'철분':null)}
+
+  /* 좌측 스텝 */
+  function renderSteps(){
+    stepsEl.innerHTML='';
+    STEPS.forEach(function(s,i){
+      var li=document.createElement('li');
+      var b=document.createElement('button');b.type='button';
+      b.className='step'+(i===S.stage?' on':'')+(i<S.stage?' done':'');
+      b.innerHTML='<span class="dot">'+s.k+'</span><span class="body"><div class="when">'+s.when+'</div><h3>'+s.h+'</h3><div class="fx">'+s.f.map(function(x){return '<p>'+fc(x[0])+'<b>'+x[1]+'</b><br>'+x[2]+'</p>'}).join('')+'</div></span>';
+      b.onclick=function(){S.stage=i;S.bStep=i===0?S.bStep:S.bStep;go()};
+      li.appendChild(b);stepsEl.appendChild(li);
+    });
+  }
+
+  function go(){renderSteps();render()}
+  function show(html){el.innerHTML='<div class="view">'+html+'</div>';return el.firstChild}
+
+  /* ---------- B: 처방 직후 ---------- */
+  function renderB(){
+    if(S.bStep===0){
+      el.innerHTML='<div class="lock" style="height:100%;position:relative">'+sb()+
+        '<div class="clock"><span>3월 14일 토요일</span><b>14:20</b></div>'+
+        '<button class="push" id="push" type="button"><div class="app"><i></i>처방약 안내 · 지금</div><p>레보티록신 처방이 접수됐어요.<br>같이 드시는 영양제만 알려주시면 안내를 보내드릴게요.</p></button>'+
+        '<div class="hint" style="bottom:30px">알림을 눌러 보세요</div></div>';
+      document.getElementById('push').onclick=function(){S.bStep=1;render()};
+      return;
+    }
+    if(S.bStep===1){
+      var v=show(sb()+'<div class="pad"><div style="margin-bottom:10px">'+feats([['should','영양제는 간단히 입력 (직접 입력)']])+'</div><div class="h">같이 드시는 영양제가 있나요?</div><p class="sub">레보티록신(갑상선 호르몬제)을 처방받으셨어요. 해당되는 것만 눌러 주세요.</p><div class="chips" id="sc"></div></div><button class="cta" id="go" type="button">안내 받기</button>');
+      var box=document.getElementById('sc');
+      SUPPS.concat(['없음']).forEach(function(n){
+        var c=document.createElement('button');c.type='button';c.className='chip';c.textContent=n;
+        function sync(){c.classList.toggle('on',n==='없음'?S.supps.length===0&&S.noneTap:S.supps.indexOf(n)>-1)}
+        c.onclick=function(){
+          if(n==='없음'){S.supps=[];S.noneTap=true}
+          else{S.noneTap=false;var i=S.supps.indexOf(n);i>-1?S.supps.splice(i,1):S.supps.push(n)}
+          [].forEach.call(box.children,function(x,j){var nm=(SUPPS.concat(['없음']))[j];x.classList.toggle('on',nm==='없음'?S.noneTap:S.supps.indexOf(nm)>-1)});
+          document.getElementById('go').disabled=!(S.supps.length||S.noneTap);
+        };
+        box.appendChild(c);sync();
+      });
+      document.getElementById('go').disabled=!(S.supps.length||S.noneTap);
+      document.getElementById('go').onclick=function(){S.bStep=2;render()};
+      return;
+    }
+    var m=iron();
+    var mine=S.records.filter(function(r){return r.from&&r.from.indexOf('A ·')===0});
+    var memo='<div class="memo"><div class="mh"><span class="mi" aria-hidden="true">📝</span><b>궁금한 점 기록</b>'+fc('nice')+'</div><div class="inrow"><input class="ta" id="mq" placeholder="예) 커피는 같이 마셔도 되나요?"><button class="add" id="sv" type="button">저장</button></div>'+
+      mine.map(function(r){return '<div class="rec-item"><span class="k q">궁금증</span><div>'+r.t+'</div></div>'}).join('')+'</div>';
+    var card=m?
+      '<div class="card warn"><span class="ic">주의</span><h4>레보티록신과 '+m+'은 4시간 간격을 두세요</h4><p>'+m+'이 약의 흡수를 줄일 수 있어요. 아침에 약을 먼저 드시고, '+m+' 영양제는 4시간 뒤로 옮기는 것이 좋아요.</p></div>':
+      '<div class="card okc"><span class="ic">확인</span><h4>입력하신 영양제와 겹치는 상호작용은 없어요</h4><p>새로 챙기는 것이 생기면 언제든 다시 확인해 보세요.</p></div>';
+    var v=show(sb()+'<div class="pad"><span class="tag">A · 처방 직후 안내</span><div class="h">처방받은 약, 이렇게 드세요</div><p class="sub">레보티록신 · 공복에 물과 함께</p>'+card+
+      '<div class="meta"><div><b>출처</b>의약품 허가사항 · 복약안내 (예시)</div><div><b>약사 확인</b>한솔약국 김약사 확인<span class="v">✓ 완료</span></div></div>'+
+      memo+'</div><button class="cta" id="nx" type="button">복용 시작 · 내 하루에서 보기</button>');
+    var mq=document.getElementById('mq');
+    function addQ(){var v=mq.value.trim();if(!v)return;S.records.push({kind:'q',t:v,from:'A · 처방 직후 안내에서 저장'});render();var p=el.querySelector('.pad');p.scrollTop=p.scrollHeight;}
+    document.getElementById('sv').onclick=addQ;
+    mq.onkeydown=function(e){if(e.key==='Enter')addQ()};
+    document.getElementById('nx').onclick=function(){S.stage=1;go()};
+  }
+
+  /* ---------- A: 복용 중 ---------- */
+  function renderA(){
+    var m=iron(),T=30,H0=6,H1=22,th=(H1-H0)*T;
+    var y=function(h){return (h-H0)*T};
+    var gap=m?S.calTime-7:null,bad=m&&gap<4;
+    var hrs='';for(var h=H0;h<=H1;h+=2)hrs+='<div class="hr" style="top:'+y(h)+'px">'+fmt(h).slice(0,2)+'시</div>';
+    var win=m?'<div class="win" style="top:'+y(7)+'px;height:'+(4*T)+'px"><span>복용 후 4시간</span></div>':'';
+    var evs='<div class="ev med" style="top:'+y(7)+'px">💊 레보티록신<em>07:00</em></div>'+
+      '<div class="ev meal" style="top:'+y(12.5)+'px">🍚 점심<em>12:30</em></div>'+
+      '<div class="ev meal" style="top:'+y(18.5)+'px">🍚 저녁<em>18:30</em></div>';
+    if(m)evs+='<div class="ev '+(bad?'bad':'good')+'" style="top:'+y(S.calTime)+'px">'+(bad?'⚠ ':'✓ ')+m+' 영양제<em>'+fmt(S.calTime)+'</em></div>';
+    var ctl=m?
+      '<div class="mv"><label><span>'+m+' 먹는 시간 옮겨 보기</span><b class="'+(bad?'':'g')+'" id="gl">'+(bad?'약과 '+gap+'시간 차 · 겹침':'약과 '+gap+'시간 차 · 안전')+'</b></label><input type="range" id="rg" min="8" max="21" step="1" value="'+S.calTime+'"></div>':
+      '<div class="card okc"><span class="ic">확인</span><h4>오늘은 겹치는 항목이 없어요</h4><p>하루 타임라인에 상호작용이 생기면 이 자리에 표시돼요.</p></div>';
+    show(sb()+'<div class="pad"><span class="tag">B · 복용 중 · 나의 하루 타임라인</span><div class="h">'+(m?(bad?'약과 '+m+'이 겹쳐 있어요':'이제 겹치지 않아요'):'내 하루 타임라인')+'</div><p class="sub">'+(m?'A에서 알려주신 '+m+' 영양제가 자동으로 올라왔어요. 시간을 옮겨 간격을 확인해 보세요.':'처방약과 식사가 하루 위에 정리돼 있어요.')+'</p>'+ctl+
+      '<div class="tl" style="--th:'+th+'px">'+hrs+win+evs+'</div>'+feats([['must','타임라인에 상호작용 표시'],['should','처방 이력·하루 타임라인 기록 (시간 수정 가능)']])+'<div class="soon">'+fc('nice')+'<span>운동 주의·권장 사항 알림 (확장 예정)</span></div></div>'+
+      '<div class="row2"><button class="cta ghost" id="rx" type="button">복용 후 반응 기록</button><button class="cta" id="nx" type="button">다음 방문 준비</button></div>');
+    var rg=document.getElementById('rg');
+    if(rg)rg.oninput=function(){
+      S.calTime=+rg.value;
+      var g=S.calTime-7,b=g<4;
+      var evEl=el.querySelector('.ev.bad,.ev.good');
+      evEl.style.top=y(S.calTime)+'px';
+      evEl.className='ev '+(b?'bad':'good');
+      evEl.innerHTML=(b?'⚠ ':'✓ ')+m+' 영양제<em>'+fmt(S.calTime)+'</em>';
+      var gl=document.getElementById('gl');gl.className=b?'':'g';gl.textContent=b?'약과 '+g+'시간 차 · 겹침':'약과 '+g+'시간 차 · 안전';
+      el.querySelector('.h').textContent=b?'약과 '+m+'이 겹쳐 있어요':'이제 겹치지 않아요';
+    };
+    document.getElementById('rx').onclick=function(){S.stage=2;S.cTab=0;go()};
+    document.getElementById('nx').onclick=function(){S.stage=2;S.cTab=1;go()};
+  }
+
+  /* ---------- C: 다음 방문 전 ---------- */
+  function suggestions(){
+    var out=[],seen={},re=[];
+    S.records.forEach(function(r){
+      if(r.kind==='r'){if(re.indexOf(r.t)<0)re.push(r.t);return}
+      if(!seen[r.t]){seen[r.t]=1;out.push({t:r.t,src:'궁금증 기록'})}
+    });
+    if(re.length)out.push({t:'약 먹고 '+re.join('·')+' 증상이 있었는데, 약 때문일 수 있나요?',src:'복용 후 반응 기록'});
+    return out;
+  }
+  function renderC(){
+    var tabs='<div class="tabs"><button type="button" data-t="0" class="'+(S.cTab===0?'on':'')+'">기록</button><button type="button" data-t="1" class="'+(S.cTab===1?'on':'')+'">방문 전 질문 ('+S.records.length+')</button></div>';
+    var body;
+    if(S.cTab===0){
+      var list=S.records.length?S.records.slice().reverse().map(function(r){
+        return '<div class="rec-item"><span class="k '+(r.kind==='q'?'q':'r')+'">'+(r.kind==='q'?'궁금증':'반응')+'</span><div>'+r.t+(r.from?'<small>'+r.from+'</small>':'')+'</div></div>'}).join(''):'<div class="empty">아직 기록이 없어요</div>';
+      body='<div class="pad"><span class="tag">C · 위젯 · 메모 · 음성메모</span><div class="h">떠오를 때 바로 적어 두세요</div><p class="sub">궁금증이나 약 먹고 느낀 반응을 한 줄로 남겨요.</p>'+
+        '<div class="lbl">복용 후 반응</div><div class="chips" id="rc"></div>'+
+        '<div class="lbl">궁금증 메모</div><div class="inrow"><input class="ta" id="tx" placeholder="예) 커피는 같이 마셔도 되나요?"><button class="mic'+(S.rec?' rec':'')+'" id="mic" type="button" aria-label="음성메모">🎤</button><button class="add" id="ad" type="button">저장</button></div>'+
+        '<div class="lbl">내 기록</div>'+list+feats([['must','궁금증·복용 후 반응 바로 기록 (위젯·메모·음성메모)']])+'<div class="soon">'+fc('nice')+'<span>녹음하면 의사·약사 답변을 한 장으로 요약 (확장 예정)</span></div></div>';
+    }else{
+      var sg=suggestions();
+      var on=function(i){return S.picked[i]!==false};
+      var sel=sg.filter(function(_,i){return on(i)});
+      var card=sg.length?'<div class="final"><h4>AI가 기록 '+S.records.length+'건을 질문 '+sg.length+'개로 정리했어요</h4><ol>'+(sel.length?sel.map(function(x){return '<li>'+x.t+'</li>'}).join(''):'<li style="opacity:.5;list-style:none;margin-left:-20px">선택한 질문이 없어요</li>')+'</ol></div>':'';
+      var rows=sg.length?'<div class="lbl" style="margin-top:18px">질문 후보 · 눌러서 빼거나 다시 넣기</div>'+sg.map(function(x,i){return '<button type="button" class="q-item'+(on(i)?' on':'')+'" data-i="'+i+'"><i>'+(on(i)?'✓':'')+'</i><span>'+x.t+'<small>'+x.src+'에서</small></span></button>'}).join(''):'<div class="empty">아직 기록이 없어요.<br>기록 탭에서 궁금증이나 반응을 남기면 AI가 질문으로 정리해 드려요.</div>';
+      body='<div class="pad"><span class="tag" style="display:flex;gap:8px;align-items:center">'+fc('should')+'<span style="font-weight:600;letter-spacing:0">방문 직전, 내 기록에서 AI가 질문 요약 제시</span></span><div class="h">이번 방문에 물어볼 질문이에요</div><p class="sub">쌓아 둔 기록을 미리 정리해 두었어요. 현장에서 그대로 보여주세요.</p>'+card+rows+'</div>';
+    }
+    show(sb()+tabs+body);
+    [].forEach.call(el.querySelectorAll('.tabs button'),function(b){b.onclick=function(){S.cTab=+b.dataset.t;render()}});
+    if(S.cTab===0){
+      var rc=document.getElementById('rc');
+      REACT.forEach(function(r){
+        var c=document.createElement('button');c.type='button';c.className='chip';c.textContent=r;
+        c.onclick=function(){S.records.push({kind:'r',t:r,from:'복용 후 반응 · 방금'});render()};
+        rc.appendChild(c);
+      });
+      var tx=document.getElementById('tx');
+      function add(){var v=tx.value.trim();if(!v)return;S.records.push({kind:'q',t:v,from:'궁금증 메모 · 방금'});render()}
+      document.getElementById('ad').onclick=add;
+      tx.onkeydown=function(e){if(e.key==='Enter')add()};
+      document.getElementById('mic').onclick=function(){
+        if(S.rec)return;S.rec=true;this.classList.add('rec');
+        setTimeout(function(){S.rec=false;S.records.push({kind:'q',t:'커피는 약 먹고 얼마 뒤에 마셔도 되나요?',from:'음성메모 · 방금'});if(S.stage===2&&S.cTab===0)render()},1500);
+      };
+    }else{
+      [].forEach.call(el.querySelectorAll('.q-item'),function(b){b.onclick=function(){var k=b.dataset.i;S.picked[k]=S.picked[k]===false;render()}});
+    }
+  }
+
+  function render(){
+    if(S.stage===0)renderB();else if(S.stage===1)renderA();else renderC();
+  }
+  el.addEventListener('click',function(e){if(e.target.closest('[data-reset]')){fresh();go()}});
+  document.getElementById('reset').onclick=function(){fresh();go()};
+  go();
+  // 슬라이드에 임베드된 경우: 좌우 이동 키를 부모 슬라이드로 전달
+  if(window.parent!==window)document.addEventListener('keydown',function(e){
+    if(/^(INPUT|TEXTAREA)$/.test(e.target.tagName))return;
+    if(['ArrowLeft','ArrowRight','PageUp','PageDown','Home','End'].indexOf(e.key)>-1){e.preventDefault();window.parent.postMessage({deckKey:e.key},'*')}
+  });
+})();
+</script>
+</body>
+</html>
