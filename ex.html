@@ -259,7 +259,7 @@ input[type=range]{width:100%;accent-color:var(--dark);height:4px}
     if(S.bStep===0){
       el.innerHTML='<div class="lock" style="height:100%;position:relative">'+sb()+
         '<div class="clock"><span>3월 14일 토요일</span><b>14:20</b></div>'+
-        '<button class="push" id="push" type="button"><div class="app"><i></i>처방약 안내 · 지금</div><p>레보티록신 처방이 접수됐어요.<br>같이 드시는 영양제만 알려주시면 안내를 보내드릴게요.</p></button>'+
+        '<button class="push" id="push" type="button"><div class="app"><i></i>처방약 안내 · 지금</div><p>처방약 받으셨나요?<br>같이 드시는 영양제를 알려주시면 주의사항을 함께 안내해드릴게요.</p></button>'+
         '<div class="hint" style="bottom:30px">알림을 눌러 보세요</div></div>';
       document.getElementById('push').onclick=function(){S.bStep=1;render()};
       return;
